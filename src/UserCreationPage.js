@@ -3,7 +3,10 @@ import React from "react";
 class UserCreationPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { usrName: '', password1: '', password2: '' };
+        this.state = {
+            fields: {},
+            errors: {}
+          }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -11,16 +14,44 @@ class UserCreationPage extends React.Component {
 
     handleChange(event) {
         const target = event.target;
-        const value = target.value
-        const name = target.name
+        let fields = this.state.fields
+        fields[target.name] = target.value
         this.setState({
-            [name]: value
+            fields
         });
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.usrName);
+        
+        if (this.handleValidation()) {
+            //const url = "http://localhost:8080/users"
+            alert('Sent form');
+        }
+        else {
+            alert('An error occured');
+        }
+        
         event.preventDefault();
+    }
+
+    handleValidation() {
+        let fields = this.state.fields;
+        let errors = {};
+        let isValid = true;
+        if(!fields["userName"]) {
+            isValid = false
+            errors["userName"] = "Username cannot be empty"
+        }
+        if(!fields["password1"]) {
+            isValid = false
+            errors["password1"] = "Password cannot be empty"
+        }
+        if (fields["password1"] !== fields["password2"]) {
+            isValid = false
+            errors["password2"] = "Passwords do not match"
+        }
+        this.setState({ errors: errors });
+        return isValid
     }
 
     render() {
@@ -29,19 +60,19 @@ class UserCreationPage extends React.Component {
                 <h2>Create new User</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Name:
-                        <input type="text" name="usrName" value={this.state.usrName} onChange={this.handleChange} />
+                        <input type="text" name="userName" placeholder="Username" value={this.state.fields["userName"]} onChange={this.handleChange} />
                     </label>
+                    <span style={{ color: "red" }}>{this.state.errors["userName"]}</span>
                     <br />
                     <label>
-                        Password:
-                        <input type="text" name="password1" value={this.state.password1} onChange={this.handleChange} />
+                        <input type="text" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />
                     </label>
+                    <span style={{ color: "red" }}>{this.state.errors["password1"]}</span>
                     <br />
                     <label>
-                        Repeat password:
-                        <input type="text" name="password2" value={this.state.password2} onChange={this.handleChange} />
+                        <input type="text" name="password2" placeholder="Confirm Password" value={this.state.fields["password2"]} onChange={this.handleChange} />
                     </label>
+                    <span style={{ color: "red" }}>{this.state.errors["password2"]}</span>
                     <br />
                     <input type="submit" value="Submit" />
                 </form>
