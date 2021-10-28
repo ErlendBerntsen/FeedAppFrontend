@@ -23,10 +23,21 @@ class LoginComponent extends React.Component {
     }
 
     handleSubmit(event) {
-        //let fields = this.state.fields;
-        //let errors = this.state.errors;
+        let fields = this.state.fields;
+        let errors = this.state.errors;
         if (this.handleValidation()) {
-            alert('Sent login info')
+            const url = "http://localhost:8080/login"
+            const body = { username: fields["userName"], password: fields["password"] }
+            axios.post(url, body)
+                .then(response => {
+                    if (response.data.accessToken) {
+                        localStorage.setItem("user", JSON.stringify(response.data))
+                    }
+                })
+                .catch(error => {
+                    errors["response"] = error.message
+                    this.setState({ errors: errors });
+                });
         }
         event.preventDefault();
     }

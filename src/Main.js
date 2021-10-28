@@ -3,8 +3,9 @@ import {Route, NavLink, BrowserRouter} from "react-router-dom";
 import Home from "./Home";
 import Polls from "./Polls";
 import Users from "./Users";
-import CreateUserComponent from "./CreateUserComponent"
-import LoginComponent from "./LoginComponent"
+import CreateUserComponent from "./components/CreateUserComponent"
+import LoginComponent from "./components/LoginComponent"
+import ProfileComponent from "./components/ProfileComponent"
 
 class Main extends Component {
     render() {
@@ -25,6 +26,7 @@ class Main extends Component {
                         <Route path="/users" component={Users}/>
                         <Route path="/signIn" component={LoginComponent}/>
                         <Route path="/createUser" component={CreateUserComponent}/>
+                        <Route path="/profile" component={ProfileComponent}/>
                     </div>
                 </div>
             </BrowserRouter>
