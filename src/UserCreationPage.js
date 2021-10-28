@@ -30,7 +30,7 @@ class UserCreationPage extends React.Component {
         if (this.handleValidation()) {
             let success = true
             const url = "http://localhost:8080/users"
-            const body = { username: fields["userName"], password: fields["password1"], userType: "REGULAR" }
+            const body = { username: fields["userName"], password: fields["password1"]}
             axios.post(url, body)
                 .then(response => response.data)
                 .catch(error => {
