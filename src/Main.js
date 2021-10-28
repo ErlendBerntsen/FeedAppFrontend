@@ -4,6 +4,7 @@ import Home from "./Home";
 import Polls from "./Polls";
 import Users from "./Users";
 import UserCreationPage from "./UserCreationPage"
+import LoginComponent from "./LoginComponent"
 
 class Main extends Component {
     render() {
@@ -15,12 +16,14 @@ class Main extends Component {
                         <li><NavLink exact to="/">Home </NavLink></li>
                         <li><NavLink to="/polls">Polls</NavLink></li>
                         <li><NavLink to="/users">Users</NavLink></li>
-                        <li><NavLink to="/createUser">UserCreationPage</NavLink></li>
+                        <li><NavLink to="/createUser">Create User</NavLink></li>
+                        <li><NavLink to="/signIn">Sign in</NavLink></li>
                     </ul>
                     <div className="content">
                         <Route exact path="/" component={Home}/>
                         <Route path="/polls" component={Polls}/>
                         <Route path="/users" component={Users}/>
+                        <Route path="/signIn" component={LoginComponent}/>
                         <Route path="/createUser" component={UserCreationPage}/>
                     </div>
                 </div>
