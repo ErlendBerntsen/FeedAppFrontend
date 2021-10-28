@@ -3,7 +3,7 @@ import {Route, NavLink, BrowserRouter} from "react-router-dom";
 import Home from "./Home";
 import Polls from "./Polls";
 import Users from "./Users";
-import UserCreationPage from "./UserCreationPage"
+import CreateUserComponent from "./CreateUserComponent"
 import LoginComponent from "./LoginComponent"
 
 class Main extends Component {
@@ -24,7 +24,7 @@ class Main extends Component {
                         <Route path="/polls" component={Polls}/>
                         <Route path="/users" component={Users}/>
                         <Route path="/signIn" component={LoginComponent}/>
-                        <Route path="/createUser" component={UserCreationPage}/>
+                        <Route path="/createUser" component={CreateUserComponent}/>
                     </div>
                 </div>
             </BrowserRouter>

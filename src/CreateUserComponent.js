@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 
-class UserCreationPage extends React.Component {
+class CreateUserComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -96,4 +96,4 @@ class UserCreationPage extends React.Component {
     }
 }
 
-export default UserCreationPage
+export default CreateUserComponent
