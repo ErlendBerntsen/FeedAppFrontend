@@ -31,7 +31,12 @@ class LoginComponent extends React.Component {
             axios.post(url, body)
                 .then(response => {
                     if (response.headers.authorization) {
-                        localStorage.setItem("user", JSON.stringify(response.headers.authorization))
+                        var auth = {
+                            'token': response.headers.authorization
+                        }
+                        //stores username, id and token in one json string. please change this if you know a better way.
+                        localStorage.setItem("user", JSON.stringify(Object.assign({}, response.data, auth))) 
+                                                            
                         this.props.history.push("/profile");
                         window.location.reload();
                     }
