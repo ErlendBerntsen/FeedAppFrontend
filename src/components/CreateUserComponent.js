@@ -6,8 +6,8 @@ class CreateUserComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fields: {},
-            errors: {},
+            fields: {username: '', password1: '', password2: ''},
+            errors: {username: '', password1: '', password2: '', response: ''},
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,7 +30,7 @@ class CreateUserComponent extends React.Component {
         if (this.handleValidation()) {
             let success = true
             const url = "http://localhost:8080/users"
-            const body = { username: fields["userName"], password: fields["password1"]}
+            const body = { username: fields["username"], password: fields["password1"]}
             axios.post(url, body)
                 .then(response => response.data)
                 .catch(error => {
@@ -51,9 +51,9 @@ class CreateUserComponent extends React.Component {
         let errors = {};
         let isValid = true;
         //TODO: check if username exists
-        if (!fields["userName"]) {
+        if (!fields["username"]) {
             isValid = false
-            errors["userName"] = "Username cannot be empty"
+            errors["username"] = "Username cannot be empty"
         }
         if (fields["password1"].length < 8) {
             isValid = false
@@ -73,7 +73,7 @@ class CreateUserComponent extends React.Component {
                 <h2>Create new User</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        <input type="text" name="userName" placeholder="Username" value={this.state.fields["userName"]} onChange={this.handleChange} />
+                        <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />
                     </label>
                     <span style={{ color: "red" }}>{this.state.errors["userName"]}</span>
                     <br />
