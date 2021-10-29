@@ -14,7 +14,6 @@ class ProfileComponent extends Component {
 
     componentDidMount() {
         const currentUser = JSON.parse(localStorage.getItem('user'));
-    
         if (!currentUser) this.setState({ redirect: "/" });
         this.setState({ currentUser: currentUser, userReady: true })
       }
@@ -24,7 +23,7 @@ class ProfileComponent extends Component {
           return <Redirect to={this.state.redirect} />
         }
         const { currentUser } = this.state;
-
+        
         return (
             <div>
                 <h2><strong>{currentUser.username}</strong> Profile</h2>

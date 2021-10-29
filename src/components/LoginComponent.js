@@ -30,8 +30,10 @@ class LoginComponent extends React.Component {
             const body = { username: fields["userName"], password: fields["password"] }
             axios.post(url, body)
                 .then(response => {
-                    if (response.data.accessToken) {
-                        localStorage.setItem("user", JSON.stringify(response.data))
+                    if (response.headers.authorization) {
+                        localStorage.setItem("user", JSON.stringify(response.headers.authorization))
+                        this.props.history.push("/profile");
+                        window.location.reload();
                     }
                 })
                 .catch(error => {
@@ -39,6 +41,7 @@ class LoginComponent extends React.Component {
                     this.setState({ errors: errors });
                 });
         }
+        
         event.preventDefault();
     }
 
