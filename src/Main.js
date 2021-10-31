@@ -17,6 +17,7 @@ class Main extends Component {
                         <li><NavLink exact to="/">Home </NavLink></li>
                         <li><NavLink to="/polls">Polls</NavLink></li>
                         <li><NavLink to="/users">Users</NavLink></li>
+                        <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/createUser">Create User</NavLink></li>
                         <li><NavLink to="/signIn">Sign in</NavLink></li>
                     </ul>
