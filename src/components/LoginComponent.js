@@ -45,7 +45,6 @@ class LoginComponent extends React.Component {
                     this.setState({ errors: errors });
                 });
         }
-        localStorage.removeItem("user")
         event.preventDefault();
     }
 
