@@ -6,6 +6,7 @@ import Users from "./Users";
 import CreateUser from "./components/CreateUser"
 import Login from "./components/Login"
 import Profile from "./components/Profile"
+import AuthService from "./services/AuthService"
 
 class Main extends Component {
     render() {
@@ -28,6 +29,10 @@ class Main extends Component {
                         <Route path="/signIn" component={Login} />
                         <Route path="/createUser" component={CreateUser} />
                         <Route path="/profile" component={Profile} />
+                    </div>
+                    <div>
+                        <br />
+                        <button onClick={AuthService.logout}>Logout</button>
                     </div>
                 </div>
             </BrowserRouter>
