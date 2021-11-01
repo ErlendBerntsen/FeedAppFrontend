@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import UserService from "../services/UserService";
 
-class ProfileComponent extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,10 +23,10 @@ class ProfileComponent extends Component {
       this.setState({ currentUser: currentUser, userReady: true })
       UserService.getContent(currentUser.id)
         .then(response => {
-          this.setState({content: response.data})
+          this.setState({ content: response.data })
         },
           error => {
-            this.setState({error: error.message})
+            this.setState({ error: error.message })
           })
     }
 
@@ -52,4 +52,4 @@ class ProfileComponent extends Component {
   }
 }
 
-export default ProfileComponent
+export default Profile

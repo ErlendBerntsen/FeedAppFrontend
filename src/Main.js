@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import {Route, NavLink, BrowserRouter} from "react-router-dom";
+import { Route, NavLink, BrowserRouter } from "react-router-dom";
 import Home from "./Home";
 import Polls from "./Polls";
 import Users from "./Users";
-import CreateUserComponent from "./components/CreateUserComponent"
-import LoginComponent from "./components/LoginComponent"
-import ProfileComponent from "./components/ProfileComponent"
+import CreateUser from "./components/CreateUser"
+import Login from "./components/Login"
+import Profile from "./components/Profile"
 
 class Main extends Component {
     render() {
@@ -22,16 +22,16 @@ class Main extends Component {
                         <li><NavLink to="/signIn">Sign in</NavLink></li>
                     </ul>
                     <div className="content">
-                        <Route exact path="/" component={Home}/>
-                        <Route path="/polls" component={Polls}/>
-                        <Route path="/users" component={Users}/>
-                        <Route path="/signIn" component={LoginComponent}/>
-                        <Route path="/createUser" component={CreateUserComponent}/>
-                        <Route path="/profile" component={ProfileComponent}/>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/polls" component={Polls} />
+                        <Route path="/users" component={Users} />
+                        <Route path="/signIn" component={Login} />
+                        <Route path="/createUser" component={CreateUser} />
+                        <Route path="/profile" component={Profile} />
                     </div>
                 </div>
             </BrowserRouter>
-      
+
         );
     }
 }

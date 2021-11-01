@@ -1,7 +1,7 @@
 import React from "react";
 import AuthService from "../services/AuthService";
 
-class LoginComponent extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -80,4 +80,4 @@ class LoginComponent extends React.Component {
     }
 }
 
-export default LoginComponent
+export default Login
