@@ -5,8 +5,11 @@ const url = "http://localhost:8080/users/"
 class UserService {
 
     getContent(id) {
-        console.log(url+id)
         return axios.get(url+id)
+    }
+
+    deleteUser(id) {
+        return axios.delete(url+id)
     }
 
 }
