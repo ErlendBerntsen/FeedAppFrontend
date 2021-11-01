@@ -42,7 +42,7 @@ class CreatePoll extends Component {
                     error => {
                         errors["response"] = error.message //potential error from post request
                         this.setState({ errors: errors })
-                        
+
                     })
 
         }
