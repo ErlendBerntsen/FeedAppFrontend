@@ -21,7 +21,7 @@ class Profile extends Component {
 
     else {  //collect data for this user
       this.setState({ currentUser: currentUser, userReady: true })
-      UserService.getContent(currentUser.id)
+      UserService.getUser(currentUser.id)
         .then(response => {
           this.setState({ content: response.data })
         },

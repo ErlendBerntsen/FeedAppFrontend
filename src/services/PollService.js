@@ -9,11 +9,13 @@ class PollService {
     }
 
     getPoll(id) {
-        return axios.get(url + id)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.get(url + id, config)
     }
 
     deletePoll(id) {
-        return axios.delete(url + id)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.delete(url + id, config)
     }
 
     createPoll(question, votingStart, votingEnd, isPrivate) {
@@ -35,11 +37,13 @@ class PollService {
     }
 
     getVote(pollId, voteId) {
-        return axios.get(url + pollId + "/votes/" + voteId)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.get(url + pollId + "/votes/" + voteId, config)
     }
 
     deletevote(pollId, voteId) {
-        return axios.delete(url + pollId + "/votes/" + voteId)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.delete(url + pollId + "/votes/" + voteId, config)
     }
 
 

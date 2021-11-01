@@ -2,18 +2,21 @@ import axios from "axios";
 
 const url = "http://localhost:8080/users/"
 
-class UserService {
 
+class UserService {
+    
     getAllUsers() {
         return axios.get(url)
     }
 
-    getContent(id) {
-        return axios.get(url + id)
+    getUser(id) {
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } }; 
+        return axios.get(url + id, config)
     }
 
     deleteUser(id) {
-        return axios.delete(url + id)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.delete(url + id, config)
     }
 
 }
