@@ -31,10 +31,10 @@ class LoginComponent extends React.Component {
                     this.props.history.push("/profile"); //redirect to profile page
                     window.location.reload();
                 },
-                error => {
-                    errors["response"] = error.message //potential error from post request
-                    this.setState({ errors: errors })
-                })
+                    error => {
+                        errors["response"] = error.message //potential error from post request
+                        this.setState({ errors: errors })
+                    })
         }
         event.preventDefault();
     }

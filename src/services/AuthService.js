@@ -18,6 +18,12 @@ class AuthService {
             })
     }
 
+    register(username, password) {
+        const body = { username: username, password: password }
+        return axios.post(url + "/users", body)
+
+    }
+
     logout() {
         localStorage.removeItem("user")
     }

@@ -1,13 +1,13 @@
 import React from "react";
-import axios from "axios";
+import AuthService from "../services/AuthService";
 
 
 class CreateUserComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fields: {username: '', password1: '', password2: ''},
-            errors: {username: '', password1: '', password2: '', response: ''},
+            fields: { username: '', password1: '', password2: '' },
+            errors: { username: '', password1: '', password2: '', response: '' },
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,19 +28,18 @@ class CreateUserComponent extends React.Component {
         let fields = this.state.fields;
         let errors = this.state.errors;
         if (this.handleValidation()) {
-            let success = true
-            const url = "http://localhost:8080/users"
-            const body = { username: fields["username"], password: fields["password1"]}
-            axios.post(url, body)
-                .then(response => response.data)
-                .catch(error => {
-                    errors["response"] = error.message 
-                    this.setState({ errors: errors });
-                    success = false
-                });
-            if (success) {
-                alert('User created successfully');
-            }
+            AuthService.register(fields.username, fields.password1)
+                .then(response => {
+                    if (response.status === 201) {
+                        alert('User created successfully');
+                        this.props.history.push("/signIn"); //redirect to login
+                        window.location.reload();
+                    }
+                },
+                    error => {
+                        errors["response"] = error.message //potential error from post request
+                        this.setState({ errors: errors })
+                    })
         }
         event.preventDefault();
     }
