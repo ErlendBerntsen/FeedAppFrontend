@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
+import UserService from "../services/UserService";
 
 class ProfileComponent extends Component {
   constructor(props) {
@@ -21,14 +21,13 @@ class ProfileComponent extends Component {
 
     else {  //collect data for this user
       this.setState({ currentUser: currentUser, userReady: true })
-      const url = "http://localhost:8080/users/" + currentUser.id
-      axios.get(url) //TODO: change when authtoken is needed
+      UserService.getContent(currentUser.id)
         .then(response => {
-          this.setState({ content: response.data })
-        })
-        .catch(err => {
-          this.setState({ error: err.message });
-        });
+          this.setState({content: response.data})
+        },
+          error => {
+            this.setState({error: error.message})
+          })
     }
 
   }
@@ -39,7 +38,7 @@ class ProfileComponent extends Component {
     }
     const { currentUser } = this.state;
     const { content } = this.state
-    
+
 
     return (
       <div>
