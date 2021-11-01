@@ -1,12 +1,12 @@
 import React from "react";
-import axios from "axios";
+import AuthService from "../services/AuthService";
 
 class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fields: {username: '', password:''},
-            errors: {username: '', password:'', response: ''}
+            fields: { username: '', password: '' },
+            errors: { username: '', password: '', response: '' }
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,24 +26,15 @@ class LoginComponent extends React.Component {
         let fields = this.state.fields;
         let errors = this.state.errors;
         if (this.handleValidation()) {
-            const url = "http://localhost:8080/login"
-            const body = { username: fields["username"], password: fields["password"] }
-            axios.post(url, body) //perform post request with given username and pass
-                .then(response => {
-                    if (response.headers.authorization) { //user was authenticated
-                        const auth = {
-                            'token': response.headers.authorization
-                        }
-                        //stores username, id and token in one json string. please change this if you know a better way.
-                        localStorage.setItem("user", JSON.stringify(Object.assign({}, response.data, auth)))                              
-                        this.props.history.push("/profile"); //navigate to profile page
-                        window.location.reload();
-                    }
-                })
-                .catch(error => {
+            AuthService.login(fields.username, fields.password)
+                .then(() => {
+                    this.props.history.push("/profile"); //redirect to profile page
+                    window.location.reload();
+                },
+                error => {
                     errors["response"] = error.message //potential error from post request
-                    this.setState({ errors: errors });
-                });
+                    this.setState({ errors: errors })
+                })
         }
         event.preventDefault();
     }
