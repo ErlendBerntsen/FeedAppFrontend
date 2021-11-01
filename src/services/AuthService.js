@@ -27,6 +27,7 @@ class AuthService {
     logout() {
         localStorage.removeItem("user")
         alert("Logged out")
+        window.location.reload(false);
     }
 }
 
