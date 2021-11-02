@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import PollService from "../services/PollService";
 import { Redirect } from "react-router-dom";
+import DateTimePicker from 'react-datetime-picker';
 
 class CreatePoll extends Component {
     constructor(props) {
         super(props);
         this.state = {
             redirect: null,
-            fields: { question: '', isPrivate: false },
-            errors: { question: '', response: '' }
+            fields: { question: '', isPrivate: false, votingStart: new Date(), votingEnd: '' },
+            errors: { question: '', response: '', votingEnd: '' }
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleDate = this.handleDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -28,13 +30,18 @@ class CreatePoll extends Component {
         this.setState({ fields });
     }
 
+    handleDate(name, event) {
+        let fields = this.state.fields
+        fields[name] = event
+        this.setState({ fields })
+        console.log(this.state.fields["votingStart"])
+    }
+
     handleSubmit(event) {
-        const votingStart = "2021-09-19T22:00:00.000+00:00" //placeholders
-        const votingEnd = "2022-09-29T22:00:00.000+00:00"
         let fields = this.state.fields;
         let errors = this.state.errors;
         if (this.handleValidation()) {
-            PollService.createPoll(fields.question, votingStart, votingEnd, fields.isPrivate)
+            PollService.createPoll(fields.question, fields.votingStart, fields.votingEnd, fields.isPrivate)
                 .then(() => {
                     alert("Poll created")
                     //TODO: redirect to poll
@@ -42,7 +49,6 @@ class CreatePoll extends Component {
                     error => {
                         errors["response"] = error.message //potential error from post request
                         this.setState({ errors: errors })
-
                     })
 
         }
@@ -70,16 +76,26 @@ class CreatePoll extends Component {
             <div>
                 <h2>Create new Poll</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
+                    <div>
                         <input type="text" name="question" placeholder="Question" value={this.state.fields["question"]} onChange={this.handleChange} />
-                    </label>
-                    <span style={{ color: "red" }}>{this.state.errors["question"]}</span>
-                    <br />
-                    Set private <input type="checkbox" name="isPrivate" checked={this.state.fields["isPrivate"]} onChange={this.handleChange} />
-                    <br />
-                    <input type="submit" value="Submit" />
-
-                    <span style={{ color: "red" }}>{this.state.errors["response"]}</span>
+                        <span style={{ color: "red" }}>{this.state.errors["question"]}</span>
+                        <br /><br />
+                        Set private <input type="checkbox" name="isPrivate" checked={this.state.fields["isPrivate"]} onChange={this.handleChange} />
+                        <br />
+                        <p>Set poll start</p>
+                        <DateTimePicker
+                            onChange={(event) => this.handleDate("votingStart", event)}
+                            value={this.state.fields["votingStart"]}
+                        /> <br />
+                        <p>Set poll end</p>
+                        <DateTimePicker
+                            onChange={(event) => this.handleDate("votingEnd", event)}
+                            value={this.state.fields["votingEnd"]}
+                            minDate={this.state.fields["votingStart"]}
+                        /><br /><br />
+                        <input type="submit" value="Submit" />
+                        <span style={{ color: "red" }}>{this.state.errors["response"]}</span>
+                    </div>
                 </form>
             </div>
         );
