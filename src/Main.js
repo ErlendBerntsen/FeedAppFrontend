@@ -8,6 +8,8 @@ import Login from "./components/Login"
 import Profile from "./components/Profile"
 import AuthService from "./services/AuthService"
 import CreatePoll from "./components/CreatePoll"
+import Poll from "./components/Poll"
+import PollList from "./components/PollList";
 
 class Main extends Component {
     render() {
@@ -20,9 +22,11 @@ class Main extends Component {
                         <li><NavLink to="/polls">Polls</NavLink></li>
                         <li><NavLink to="/users">Users</NavLink></li>
                         <li><NavLink to="/profile">Profile</NavLink></li>
+                        <li><NavLink to="/poll">Poll</NavLink></li>
                         <li><NavLink to="/createUser">Create User</NavLink></li>
                         <li><NavLink to="/createPoll">Create Poll</NavLink></li>
                         <li><NavLink to="/signIn">Sign in</NavLink></li>
+                        <li><NavLink to="/pollList">Poll List</NavLink></li>
                     </ul>
                     <div className="content">
                         <Route exact path="/" component={Home} />
@@ -32,6 +36,8 @@ class Main extends Component {
                         <Route path="/createUser" component={CreateUser} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/createPoll" component={CreatePoll} />
+                        <Route path="/poll" component={Poll} />
+                        <Route path="/pollList" component={PollList} />
                     </div>
                     <div>
                         <br />

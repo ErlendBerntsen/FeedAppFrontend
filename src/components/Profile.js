@@ -14,7 +14,6 @@ class Profile extends Component {
     };
   }
 
-  //auto invoked
   componentDidMount() {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     if (!currentUser) this.setState({ redirect: "/" }); //redirect to home if no current user
@@ -38,7 +37,6 @@ class Profile extends Component {
     }
     const { currentUser } = this.state;
     const { content } = this.state
-
 
     return (
       <div>
