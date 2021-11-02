@@ -10,7 +10,7 @@ class PollList extends Component {
             contentReady: false,
             currentUser: { username: '', id: '' },
             content: {},
-            error: 'as'
+            error: ''
         };
     }
 
