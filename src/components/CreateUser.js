@@ -74,7 +74,7 @@ class CreateUser extends React.Component {
                     <label>
                         <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />
                     </label>
-                    <span style={{ color: "red" }}>{this.state.errors["userName"]}</span>
+                    <span style={{ color: "red" }}>{this.state.errors["username"]}</span>
                     <br />
                     <label>
                         <input type="text" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />

@@ -7,6 +7,7 @@ import CreateUser from "./components/CreateUser"
 import Login from "./components/Login"
 import Profile from "./components/Profile"
 import AuthService from "./services/AuthService"
+import CreatePoll from "./components/CreatePoll"
 
 class Main extends Component {
     render() {
@@ -20,6 +21,7 @@ class Main extends Component {
                         <li><NavLink to="/users">Users</NavLink></li>
                         <li><NavLink to="/profile">Profile</NavLink></li>
                         <li><NavLink to="/createUser">Create User</NavLink></li>
+                        <li><NavLink to="/createPoll">Create Poll</NavLink></li>
                         <li><NavLink to="/signIn">Sign in</NavLink></li>
                     </ul>
                     <div className="content">
@@ -29,6 +31,7 @@ class Main extends Component {
                         <Route path="/signIn" component={Login} />
                         <Route path="/createUser" component={CreateUser} />
                         <Route path="/profile" component={Profile} />
+                        <Route path="/createPoll" component={CreatePoll} />
                     </div>
                     <div>
                         <br />
