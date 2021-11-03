@@ -9,8 +9,7 @@ class PollService {
     }
 
     getPoll(id) {
-        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
-        return axios.get(url + id, config)
+        return axios.get(url + id)
     }
 
     deletePoll(id) {
@@ -24,7 +23,9 @@ class PollService {
         return axios.post(url, body)
     }
 
-    addVote(pollId, voterId, optionChosen, voteType) {
+    addVote(pollId, optionChosen, voteType) {
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        const voterId = !currentUser ? null : currentUser.id
         const body = { pollId: pollId, voterId: voterId, optionChosen: optionChosen, voteType: voteType }
         return axios.post(url + pollId + "/votes", body)
     }

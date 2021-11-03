@@ -27,7 +27,7 @@ class PollList extends Component {
                 })
     }
 
-    //creates a link to the poll page of all polls. All available data for the poll is sent in the state variable
+    //creates a link to the poll page of all polls. The id of the poll is sent in the state variable
     createLinks() {
         const { content } = this.state
         const links = []
@@ -37,7 +37,7 @@ class PollList extends Component {
                     <Link to={{
                         pathname: '/poll',
                         state: {
-                            content: content[i]
+                            id: content[i].id
                         }
                     }}>{content[i].question}</Link>}
                 </li>)
