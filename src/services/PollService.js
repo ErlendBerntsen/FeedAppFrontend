@@ -9,8 +9,7 @@ class PollService {
     }
 
     getPoll(id) {
-        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
-        return axios.get(url + id, config)
+        return axios.get(url + id)
     }
 
     deletePoll(id) {
