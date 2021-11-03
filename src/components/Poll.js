@@ -18,18 +18,24 @@ class Poll extends Component {
     componentDidMount() {
         const currentUser = JSON.parse(localStorage.getItem('user'));
         this.setState({ currentUser: currentUser })
-        const pollId = this.props.location.state.id //get the poll id from the clicked link
-        PollService.getPoll(pollId)
-            .then(response => {
-                this.setState({ content: response.data, contentReady: true })
-            },
-                error => {
-                    this.setState({ error: error.message })
-                })
+        //get the poll id from the clicked link
+        if (!this.props.location.state) {
+            //TODO: set redirect if no id?
+        }
+        else {
+            const pollId = this.props.location.state.id //get poll id from the clicked link
+            PollService.getPoll(pollId)
+                .then(response => {
+                    this.setState({ content: response.data, contentReady: true })
+                },
+                    error => {
+                        this.setState({ error: error.message })
+                    })
+        }
     }
 
     render() {
-        if(!this.state.contentReady) {
+        if (!this.state.contentReady) {
             return null
         }
         const { content } = this.state
