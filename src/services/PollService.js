@@ -23,8 +23,15 @@ class PollService {
         return axios.post(url, body)
     }
 
-    addVote(pollId, voterId, optionChosen, voteType) {
-        const body = { pollId: pollId, voterId: voterId, optionChosen: optionChosen, voteType: voteType }
+    addVote(pollId, optionChosen, voteType) {
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        let body = {}
+        if (!currentUser) {
+            body = { pollId: pollId, optionChosen: optionChosen, voteType: voteType }
+        }
+        else {
+            body = { pollId: pollId, voterId: currentUser.id, optionChosen: optionChosen, voteType: voteType }
+        }
         return axios.post(url + pollId + "/votes", body)
     }
 
