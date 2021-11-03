@@ -32,7 +32,7 @@ class Poll extends Component {
         }
         else {
             const pollId = this.props.location.state.id //get poll id from the clicked link
-            this.setState({ pollId: pollId })
+            this.setState({ pollId: pollId }) //get content for this poll
             PollService.getPoll(pollId)
                 .then(response => {
                     this.setState({ content: response.data, contentReady: true })

@@ -25,13 +25,8 @@ class PollService {
 
     addVote(pollId, optionChosen, voteType) {
         const currentUser = JSON.parse(localStorage.getItem('user'));
-        let body = {}
-        if (!currentUser) {
-            body = { pollId: pollId, optionChosen: optionChosen, voteType: voteType }
-        }
-        else {
-            body = { pollId: pollId, voterId: currentUser.id, optionChosen: optionChosen, voteType: voteType }
-        }
+        const voterId = !currentUser ? null : currentUser.id
+        const body = { pollId: pollId, voterId: voterId, optionChosen: optionChosen, voteType: voteType }
         return axios.post(url + pollId + "/votes", body)
     }
 
