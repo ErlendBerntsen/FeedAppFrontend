@@ -9,7 +9,7 @@ class CreatePoll extends Component {
         this.state = {
             redirect: null,
             fields: { question: '', isPrivate: false, votingStart: new Date(), votingEnd: '' },
-            errors: { question: '', response: '', votingEnd: '' }
+            errors: { question: '', response: '' }
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleDate = this.handleDate.bind(this);
