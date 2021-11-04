@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import UserService from "../services/UserService";
+import PollList from "./PollList";
 
 class Profile extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class Profile extends Component {
         <p>
           <span style={{ color: "red" }}>{this.state.error}</span>
         </p>
+        <PollList user={true}/>
       </div>
     );
   }

@@ -5,7 +5,8 @@ const url = "http://localhost:8080/polls/"
 class PollService {
 
     getAllPolls(requestParam) {
-        return axios.get(url+requestParam)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } }; 
+        return axios.get(url+requestParam, config)
     }
 
     getPoll(id) {
@@ -20,7 +21,8 @@ class PollService {
     createPoll(question, votingStart, votingEnd, isPrivate) {
         const currentUser = JSON.parse(localStorage.getItem('user'));
         const body = { creatorId: currentUser.id, question: question, votingStart: votingStart, votingEnd: votingEnd, isPrivate: isPrivate }
-        return axios.post(url, body)
+        const config = { headers: { Authorization: currentUser.token } }; 
+        return axios.post(url, body, config)
     }
 
     addVote(pollId, optionChosen, voteType) {

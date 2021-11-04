@@ -17,8 +17,12 @@ class PollList extends Component {
 
     componentDidMount() {
         const currentUser = JSON.parse(localStorage.getItem('user'));
+        if (!currentUser && this.props.user) { //to fix crash logging out on profile page
+            return
+        }
         this.setState({ currentUser: currentUser })
-        PollService.getAllPolls("?isPrivate=false") //get all public polls. TODO: get public and polls created by current user
+        const requestParam = this.props.user ? "?creator=" + currentUser.id : "?isPrivate=false"
+        PollService.getAllPolls(requestParam)
             .then(response => {
                 this.setState({ content: response.data, contentReady: true })
             },
@@ -49,13 +53,15 @@ class PollList extends Component {
         if (!this.state.contentReady) {
             return null
         }
+        const header = !this.props.user ? "Public polls" : "My polls"
         const links = this.createLinks()
         return (
             <div>
-                <h2>Poll List</h2>
+                <h2>{header}</h2>
                 <ul> {links} </ul>
                 <span style={{ color: "red" }}>{this.state.error}</span>
             </div>
+
         );
     }
 }
