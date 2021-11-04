@@ -101,6 +101,7 @@ class Poll extends Component {
         return (
             <div>
                 <h2>Poll</h2>
+                <h4>CODE: {content.code}</h4>
                 {content.question}
                 <form onSubmit={this.handleSubmit}>
                     <div className="radio">
