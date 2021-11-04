@@ -4,8 +4,8 @@ const url = "http://localhost:8080/polls/"
 
 class PollService {
 
-    getAllPolls() {
-        return axios.get(url)
+    getAllPolls(requestParam) {
+        return axios.get(url+requestParam)
     }
 
     getPoll(id) {

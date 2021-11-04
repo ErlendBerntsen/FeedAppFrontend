@@ -18,7 +18,7 @@ class PollList extends Component {
     componentDidMount() {
         const currentUser = JSON.parse(localStorage.getItem('user'));
         this.setState({ currentUser: currentUser })
-        PollService.getAllPolls()
+        PollService.getAllPolls("?isPrivate=false") //get all public polls. TODO: get public and polls created by current user
             .then(response => {
                 this.setState({ content: response.data, contentReady: true })
             },
