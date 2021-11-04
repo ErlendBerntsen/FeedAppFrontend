@@ -5,7 +5,8 @@ const url = "http://localhost:8080/polls/"
 class PollService {
 
     getAllPolls(requestParam) {
-        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } }; 
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        const config = !currentUser ? null : { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } }
         return axios.get(url+requestParam, config)
     }
 
