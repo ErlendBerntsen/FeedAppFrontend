@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import UserService from "../services/UserService";
 import PollList from "./PollList";
+import AuthService from "../services/AuthService";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       redirect: null,
-      userReady: false,
+      contentReady: false,
       currentUser: { username: '', id: '' },
       content: {},
       error: ''
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -20,10 +22,10 @@ class Profile extends Component {
     if (!currentUser) this.setState({ redirect: "/" }); //redirect to home if no current user
 
     else {  //collect data for this user
-      this.setState({ currentUser: currentUser, userReady: true })
+      this.setState({ currentUser: currentUser })
       UserService.getUser(currentUser.id)
         .then(response => {
-          this.setState({ content: response.data })
+          this.setState({ content: response.data, contentReady: true })
         },
           error => {
             this.setState({ error: error.message })
@@ -32,21 +34,47 @@ class Profile extends Component {
 
   }
 
+  async handleDelete() {
+    let suc = false
+    await UserService.deleteUser(this.state.currentUser.id)
+      .then(() => {
+        alert("User deleted!")
+        suc = true
+      },
+        error => {
+          this.setState({ error: error.message })
+          suc = false
+        })
+    if (suc) {
+      AuthService.logout()
+    }
+  }
+
   render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />
     }
-    const { currentUser } = this.state;
+    if (!this.state.contentReady) {
+      return null
+    }
     const { content } = this.state
 
     return (
       <div>
-        <h2><strong>{currentUser.username}</strong> Profile</h2>
-        {JSON.stringify(content)}
+        <h2>Profile</h2>
+        <ul>
+          <li>Username: {content.username}</li>
+          <li>User Type: {content.userType}</li>
+          <li>Number of Total Votes: {content.votesId.length}</li>
+          <li>Number of Created Polls: {content.createdPollsId.length}</li>
+        </ul>
+        <button onClick={this.handleDelete}>
+          Delete User
+        </button>
         <p>
           <span style={{ color: "red" }}>{this.state.error}</span>
         </p>
-        <PollList user={true}/>
+        <PollList user={true} />
       </div>
     );
   }

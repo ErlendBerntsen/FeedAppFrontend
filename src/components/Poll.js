@@ -125,7 +125,7 @@ class Poll extends Component {
             return null
         }
 
-        const delPoll = () => {
+        const ownerOpt = () => {
             if (this.state.isOwner) { //only display this option if the user i logged in
                 return (
                     <button onClick={this.handleDelete}>
@@ -171,7 +171,7 @@ class Poll extends Component {
                     <input type="submit" value="Submit" />
                 </form>
                 <br />
-                {delPoll()}
+                {ownerOpt()}
                 <span style={{ color: "red" }}>{this.state.error}</span>
             </div>
         );
