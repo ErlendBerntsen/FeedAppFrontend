@@ -7,6 +7,7 @@ class Poll extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isOwner: false,
             pollId: '',
             answer: '',
             anonymous: false,
@@ -19,6 +20,7 @@ class Poll extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
 
@@ -37,6 +39,11 @@ class Poll extends Component {
             PollService.getPoll(pollId)
                 .then(response => {
                     this.setState({ content: response.data, contentReady: true })
+                    if (!this.state.guest) {
+                        if (currentUser.id === response.data.creatorId) {
+                            this.setState({ isOwner: true })
+                        }
+                    }
                 },
                     error => {
                         this.setState({ error: error.message })
@@ -79,6 +86,18 @@ class Poll extends Component {
         return isValid
     }
 
+    handleDelete() {
+        PollService.deletePoll(this.state.pollId)
+            .then(() => {
+                alert("Poll deleted!")
+                this.props.history.push("/profile");
+                window.location.reload();
+            },
+                error => {
+                    this.setState({ error: error.message })
+                })
+    }
+
 
     render() {
         if (this.state.redirect) {
@@ -102,6 +121,16 @@ class Poll extends Component {
                             checked={this.state.anonymous}
                             onChange={this.handleChange} />
                     </label>)
+            }
+            return null
+        }
+
+        const delPoll = () => {
+            if (this.state.isOwner) { //only display this option if the user i logged in
+                return (
+                    <button onClick={this.handleDelete}>
+                        Delete Poll
+                    </button>)
             }
             return null
         }
@@ -141,6 +170,8 @@ class Poll extends Component {
                     </div>
                     <input type="submit" value="Submit" />
                 </form>
+                <br />
+                {delPoll()}
                 <span style={{ color: "red" }}>{this.state.error}</span>
             </div>
         );
