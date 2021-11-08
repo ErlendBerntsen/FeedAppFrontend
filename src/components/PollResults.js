@@ -19,7 +19,7 @@ class PollResults extends Component {
         PollService.getResults(pollId)
             .then(response => {
                 this.setState({ content: response.data, contentReady: true })
-            })
+            },)
     }
 
     render() {
