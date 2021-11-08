@@ -47,6 +47,10 @@ class PollService {
         return axios.delete(url + pollId + "/votes/" + voteId, config)
     }
 
+    getResults(pollId) {
+        return axios.get(url + pollId + "/result/" )
+    }
+
 
 
 }

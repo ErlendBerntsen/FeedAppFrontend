@@ -10,6 +10,7 @@ import AuthService from "./services/AuthService"
 import CreatePoll from "./components/CreatePoll"
 import Poll from "./components/Poll"
 import PollList from "./components/PollList";
+import PollResults from "./components/PollResults"
 
 class Main extends Component {
     render() {
@@ -38,6 +39,7 @@ class Main extends Component {
                         <Route path="/createPoll" component={CreatePoll} />
                         <Route path="/poll" component={Poll} />
                         <Route path="/pollList" component={PollList} />
+                        <Route path="/result" component={PollResults} />
                     </div>
                     <div>
                         <br />

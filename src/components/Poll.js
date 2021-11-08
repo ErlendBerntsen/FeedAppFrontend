@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PollService from "../services/PollService";
+import { Redirect } from "react-router-dom";
 
 
 class Poll extends Component {
@@ -61,7 +62,7 @@ class Poll extends Component {
             PollService.addVote(this.state.pollId, this.state.answer, voteType)
                 .then(() => {
                     alert("Vote sent!")
-                    //TODO: redirect to result page?
+                    this.setState({ redirect: "/result" })
                 },
                     error => {
                         this.setState({ error: error.message })
@@ -80,6 +81,13 @@ class Poll extends Component {
 
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={{
+                pathname: this.state.redirect,
+                state: { id: this.state.pollId, question: this.state.content.question }
+            }} />
+        }
+
         if (!this.state.contentReady) {
             return null
         }
