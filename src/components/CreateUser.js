@@ -1,13 +1,13 @@
 import React from "react";
-import axios from "axios";
+import AuthService from "../services/AuthService";
 
 
-class UserCreationPage extends React.Component {
+class CreateUser extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fields: {},
-            errors: {},
+            fields: { username: '', password1: '', password2: '' },
+            errors: { username: '', password1: '', password2: '', response: '' },
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,19 +28,18 @@ class UserCreationPage extends React.Component {
         let fields = this.state.fields;
         let errors = this.state.errors;
         if (this.handleValidation()) {
-            let success = true
-            const url = "http://localhost:8080/users"
-            const body = { username: fields["userName"], password: fields["password1"]}
-            axios.post(url, body)
-                .then(response => response.data)
-                .catch(error => {
-                    errors["response"] = error.message 
-                    this.setState({ errors: errors });
-                    success = false
-                });
-            if (success) {
-                alert('User created successfully');
-            }
+            AuthService.register(fields.username, fields.password1)
+                .then(response => {
+                    if (response.status === 201) {
+                        alert('User created successfully');
+                        this.props.history.push("/signIn"); //redirect to login
+                        window.location.reload();
+                    }
+                },
+                    error => {
+                        errors["response"] = error.message //potential error from post request
+                        this.setState({ errors: errors })
+                    })
         }
         event.preventDefault();
     }
@@ -51,9 +50,9 @@ class UserCreationPage extends React.Component {
         let errors = {};
         let isValid = true;
         //TODO: check if username exists
-        if (!fields["userName"]) {
+        if (!fields["username"]) {
             isValid = false
-            errors["userName"] = "Username cannot be empty"
+            errors["username"] = "Username cannot be empty"
         }
         if (fields["password1"].length < 8) {
             isValid = false
@@ -73,9 +72,9 @@ class UserCreationPage extends React.Component {
                 <h2>Create new User</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        <input type="text" name="userName" placeholder="Username" value={this.state.fields["userName"]} onChange={this.handleChange} />
+                        <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />
                     </label>
-                    <span style={{ color: "red" }}>{this.state.errors["userName"]}</span>
+                    <span style={{ color: "red" }}>{this.state.errors["username"]}</span>
                     <br />
                     <label>
                         <input type="text" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />
@@ -96,4 +95,4 @@ class UserCreationPage extends React.Component {
     }
 }
 
-export default UserCreationPage
+export default CreateUser
