@@ -52,12 +52,18 @@ class SearchId extends Component {
             }} />
         }
 
+        const stylee = {
+            width: "20%",
+            padding: "5px 20px",
+            margin: "8px 20px",
+        }
+
         return (
             <div>
                 Find poll by Code
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        <input type="number"
+                        <input type="number" style={stylee}
                             placeholder="Enter Poll Code"
                             value={this.state.code}
                             onChange={this.handleChange} />
