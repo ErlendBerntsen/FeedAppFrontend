@@ -53,9 +53,9 @@ class SearchId extends Component {
         }
 
         const stylee = {
-                width: "20%",
-                padding: "5px 20px",
-                margin: "8px 20px",
+            width: "20%",
+            padding: "5px 20px",
+            margin: "8px 20px",
         }
 
         return (

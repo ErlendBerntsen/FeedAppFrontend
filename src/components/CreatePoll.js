@@ -50,7 +50,6 @@ class CreatePoll extends Component {
                         errors["response"] = error.message //potential error from post request
                         this.setState({ errors: errors })
                     })
-
         }
         event.preventDefault();
     }
@@ -85,7 +84,7 @@ class CreatePoll extends Component {
                         <br />
                         <div class="dates">
                             <p>Set poll start</p>
-                            <DateTimePicker 
+                            <DateTimePicker
                                 onChange={(event) => this.handleDate("votingStart", event)}
                                 value={this.state.fields["votingStart"]}
                             /> <br />
