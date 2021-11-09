@@ -19,7 +19,7 @@ class Main extends Component {
         const currentUser = localStorage.getItem("user")
         const login = !currentUser ? false : true
         return (
-            <BrowserRouter class="nas">
+            <BrowserRouter>
                 <div>
                     <Navbar user={login} />
                     <div className="content">
