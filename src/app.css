@@ -1,0 +1,33 @@
+body {
+    background-color: #FFFFFF;
+    padding: 40px;
+    font-family: Arial;
+    text-align: center;
+}
+
+
+
+ul li {
+    list-style-type: none;
+    margin: 15px;
+}
+
+
+
+button {
+border-radius: 4px;
+  background: #808080;
+  padding: 10px 22px;
+  color: #000000;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+
+
+
+

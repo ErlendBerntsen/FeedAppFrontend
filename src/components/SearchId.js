@@ -63,6 +63,7 @@ class SearchId extends Component {
                             onChange={this.handleChange} />
                     </label>
                     <input type="submit" value="Submit" />
+                    <br />
                     <span style={{ color: "red" }}>{this.state.error}</span>
                 </form>
             </div>
