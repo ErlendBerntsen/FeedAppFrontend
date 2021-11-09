@@ -21,6 +21,7 @@ class Poll extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleClick = this.handleClick.bind(this)
     }
 
 
@@ -60,6 +61,10 @@ class Poll extends Component {
             this.setState({ answer: target.value });
         }
 
+    }
+
+    handleClick() {
+        this.setState({ redirect: "/result" })
     }
 
     handleSubmit(event) {
@@ -128,9 +133,21 @@ class Poll extends Component {
         const ownerOpt = () => {
             if (this.state.isOwner) { //only display this option if the user i logged in
                 return (
-                    <button onClick={this.handleDelete}>
-                        Delete Poll
-                    </button>)
+                    <div>
+                        <p>
+                            <button style={{ background: "green", color: "white" }}
+                                onClick={this.handleClick}>
+                                Show Results
+                            </button>
+                        </p>
+                        <p>
+                            <button style={{ background: "red", color: "white" }}
+                                onClick={this.handleDelete}>
+                                Delete Poll
+                            </button>
+                        </p>
+                    </div>
+                );
             }
             return null
         }
@@ -168,11 +185,11 @@ class Poll extends Component {
                     <div>
                         {anonBox()}
                     </div>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Vote" />
                 </form>
+                <span style={{ color: "red" }}>{this.state.error}</span>
                 <br />
                 {ownerOpt()}
-                <span style={{ color: "red" }}>{this.state.error}</span>
             </div>
         );
     }
