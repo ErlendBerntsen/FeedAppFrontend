@@ -54,7 +54,7 @@ class Navbar extends Component {
                     <Bars />
 
                     <NavMenu>
-                        <NavLink to='/' activeStyle>
+                        <NavLink to='/' exact={true} activeStyle>
                             Home
                         </NavLink>
                         <NavLink to='/createUser' activeStyle>
