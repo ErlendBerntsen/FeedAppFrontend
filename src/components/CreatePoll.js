@@ -78,8 +78,9 @@ class CreatePoll extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <input type="text" name="question" placeholder="Question" value={this.state.fields["question"]} onChange={this.handleChange} />
+                        <br />
                         <span style={{ color: "red" }}>{this.state.errors["question"]}</span>
-                        <br /><br />
+                        <br />
                         Set private <input type="checkbox" name="isPrivate" checked={this.state.fields["isPrivate"]} onChange={this.handleChange} />
                         <br />
                         <div class="dates">
