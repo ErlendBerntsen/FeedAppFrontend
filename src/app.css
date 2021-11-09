@@ -26,26 +26,28 @@ border-radius: 4px;
   transition: all 0.2s ease-in-out;
 }
 
-input[type=submit] {
+[type=submit] {
   padding:5px 15px; 
   background:#ccc; 
   border: 1;
   cursor:pointer;
   -webkit-border-radius: 5px;
-  border-radius: 5px; 
+  border-radius: 10px; 
 }
 
+
+
 input[type=number] {
-  width: 20%;
-  padding: 5px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
+  border-radius: 10px;
 }
+
+
 
 input[type=text] {
   width: 15%;
-  padding: 3px 20px;
+  padding: 5px 20px;
   margin: 3px 0;
+  border-radius: 10px;
   box-sizing: border-box;
 }
 
@@ -54,6 +56,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 
 
 
