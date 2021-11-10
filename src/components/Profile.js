@@ -68,6 +68,12 @@ class Profile extends Component {
           <li>Number of Total Votes: {content.votesId.length}</li>
           <li>Number of Created Polls: {content.createdPollsId.length}</li>
         </ul>
+        <button  >
+          Change Username
+        </button>
+        <button  >
+          Change Password
+        </button>
         <button style={{background: "red", color: "white"}} onClick={this.handleDelete}>
           Delete User
         </button>

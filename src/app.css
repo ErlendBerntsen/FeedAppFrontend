@@ -12,12 +12,12 @@ ul li {
 
 button {
 border-radius: 4px;
-  background: #808080;
+  background: #d1d1d1;
   padding: 3px 15px;
-  color: #000000;
   outline: none;
   border:1;
   cursor: pointer;
+  margin: 8px;
   transition: all 0.2s ease-in-out;
 }
 
