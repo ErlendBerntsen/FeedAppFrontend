@@ -67,7 +67,7 @@ class Login extends React.Component {
                     <span style={{ color: "red" }}>{this.state.errors["username"]}</span>
                     <br />
                     <label>
-                        <input type="text" name="password" placeholder="Password" value={this.state.fields["password"]} onChange={this.handleChange} />
+                        <input type="password" name="password" placeholder="Password" value={this.state.fields["password"]} onChange={this.handleChange} />
                     </label>
                     <span style={{ color: "red" }}>{this.state.errors["password"]}</span>
                     <br />

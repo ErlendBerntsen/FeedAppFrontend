@@ -71,11 +71,11 @@ class CreateUser extends React.Component {
                     </label>
                     <br />
                     <label>
-                        <input type="text" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />
+                        <input type="password" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />
                     </label>
                     <br />
                     <label>
-                        <input type="text" name="password2" placeholder="Confirm Password" value={this.state.fields["password2"]} onChange={this.handleChange} />
+                        <input type="password" name="password2" placeholder="Confirm Password" value={this.state.fields["password2"]} onChange={this.handleChange} />
                     </label>
                     <br />
                     <input type="submit" value="Create" />

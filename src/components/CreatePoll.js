@@ -82,7 +82,7 @@ class CreatePoll extends Component {
                         <br />
                         Set private <input type="checkbox" name="isPrivate" checked={this.state.fields["isPrivate"]} onChange={this.handleChange} />
                         <br />
-                        <div class="dates">
+                        <div>
                             <p>Set poll start</p>
                             <DateTimePicker
                                 onChange={(event) => this.handleDate("votingStart", event)}

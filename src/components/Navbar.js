@@ -26,13 +26,13 @@ class Navbar extends Component {
                     <Bars />
 
                     <NavMenu>
-                        <NavLink to='/'exact={true} activeStyle>
+                        <NavLink to='/'exact={true} >
                             Home
                         </NavLink>
-                        <NavLink to='/profile' activeStyle>
+                        <NavLink to='/profile' >
                             Profile
                         </NavLink>
-                        <NavLink to='/createPoll' activeStyle>
+                        <NavLink to='/createPoll' >
                             Create Poll
                         </NavLink>
                         {/* Second Nav */}
@@ -54,10 +54,10 @@ class Navbar extends Component {
                     <Bars />
 
                     <NavMenu>
-                        <NavLink to='/' exact={true} activeStyle>
+                        <NavLink to='/' exact={true} >
                             Home
                         </NavLink>
-                        <NavLink to='/createUser' activeStyle>
+                        <NavLink to='/createUser' >
                             Create User
                         </NavLink>
                         {/* Second Nav */}
