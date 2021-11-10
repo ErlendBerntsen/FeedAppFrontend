@@ -92,7 +92,7 @@ class Profile extends Component {
             this.setState({ error: error.message })
           })
     }
-    
+
   }
 
   passValidation() {
