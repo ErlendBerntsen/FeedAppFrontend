@@ -36,7 +36,7 @@ class SearchId extends Component {
                 isValid = true
             },
                 error => {
-                    this.setState({ error: "Invalid Poll Code" })
+                    this.setState({ error: error.response.data })
                     isValid = false
                 })
         return isValid

@@ -6,7 +6,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
             fields: { username: '', password: '' },
-            errors: { username: '', password: '', response: '' }
+            errors: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +24,6 @@ class Login extends React.Component {
 
     handleSubmit(event) {
         let fields = this.state.fields;
-        let errors = this.state.errors;
         if (this.handleValidation()) {
             AuthService.login(fields.username, fields.password)
                 .then(() => {
@@ -32,8 +31,7 @@ class Login extends React.Component {
                     window.location.reload();
                 },
                     error => {
-                        errors["response"] = error.message //potential error from post request
-                        this.setState({ errors: errors })
+                        this.setState({ errors: error.message })
                     })
         }
         event.preventDefault();
@@ -42,18 +40,15 @@ class Login extends React.Component {
     //check that no inputfields are empty
     handleValidation() {
         let fields = this.state.fields;
-        let errors = {};
-        let isValid = true;
         if (!fields["username"]) {
-            isValid = false
-            errors["username"] = "Username cannot be empty"
+            this.setState({ errors: "Username cannot be empty" });
+            return false
         }
         if (!fields["password"]) {
-            isValid = false
-            errors["password"] = "Password cannot be empty"
+            this.setState({ errors: "Password cannot be empty" });
+            return false
         }
-        this.setState({ errors: errors });
-        return isValid
+        return true
     }
 
     render() {
@@ -64,16 +59,14 @@ class Login extends React.Component {
                     <label>
                         <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />
                     </label>
-                    <span style={{ color: "red" }}>{this.state.errors["username"]}</span>
                     <br />
                     <label>
                         <input type="password" name="password" placeholder="Password" value={this.state.fields["password"]} onChange={this.handleChange} />
                     </label>
-                    <span style={{ color: "red" }}>{this.state.errors["password"]}</span>
                     <br />
                     <input type="submit" value="Submit" />
                     <br />
-                    <span style={{ color: "red" }}>{this.state.errors["response"]}</span>
+                    <span style={{ color: "red" }}>{this.state.errors}</span>
                 </form>
             </div>
         );
