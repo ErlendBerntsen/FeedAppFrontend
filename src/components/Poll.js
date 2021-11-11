@@ -77,7 +77,7 @@ class Poll extends Component {
                 this.setState({ isOpen: false });
             }
         }
-        
+
     }
 
     handleClick() {
@@ -86,17 +86,39 @@ class Poll extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        if (this.handleValidation()) {
+        if (this.handleValidation() && !this.alreadyVoted()) {
             const voteType = this.state.guest ? "GUEST" : this.state.anonymous ? "ANONYMOUS" : "USER"
             PollService.addVote(this.state.pollId, this.state.answer, voteType)
                 .then(() => {
                     alert("Vote sent!")
+                    this.setVoted()
                     this.setState({ redirect: "/result" })
                 },
                     error => {
                         this.setState({ error: error.message })
                     })
         }
+    }
+
+    alreadyVoted() {
+        //localStorage.removeItem("polls")
+        let currentPolls = JSON.parse(localStorage.getItem("polls"))
+        if (!currentPolls) {
+            currentPolls = { polls: [] }
+            localStorage.setItem("polls", JSON.stringify(currentPolls))
+        }
+        if (currentPolls.polls.indexOf(this.state.pollId) === -1) {
+            return false
+        }
+        this.setState({ error: "You have already voted on this poll!" })
+        return true
+    }
+
+
+    setVoted() {
+        let currentPolls = JSON.parse(localStorage.getItem("polls"))
+        currentPolls.polls.push(this.state.pollId)
+        localStorage.setItem("polls", JSON.stringify(currentPolls))
     }
 
     handleValidation() {
