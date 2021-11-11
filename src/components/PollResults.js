@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PollService from "../services/PollService";
+import ProgressBar from "./ProgressBar";
 
 class PollResults extends Component {
     constructor(props) {
@@ -26,13 +27,18 @@ class PollResults extends Component {
         if (!this.state.contentReady) {
             return null
         }
-        return (
-            <div>
-                <h3>{this.state.question}</h3>
-                Yes: {this.state.content.yesVotes}
-                <br />
-                No: {this.state.content.noVotes}
+
+        const yes = this.state.content.yesVotes
+        const no = this.state.content.noVotes
+        const yesP = yes === 0 && no === 0 ? 50 : ((yes /(yes+no))*100).toFixed(2)
+        const noP = yes === 0 && no === 0 ? 50 : ((no /(yes+no))*100).toFixed(2)
+        return (       
+            <div >
+                <h2>{this.state.question}</h2>
+                <ProgressBar bgcolor="orange" progress={yesP} label="YES" votes={yes} height={30} />
+                <ProgressBar bgcolor="green" progress={noP}  label="NO" votes={no} height={30} />
             </div>
+            
         );
     }
 
