@@ -46,7 +46,7 @@ class Poll extends Component {
                             this.setState({ isOwner: true })
                         }
                     }
-                    this.checkPollOpen(response.data.votingEnd)
+                    this.checkPollOpen(response.data.votingStart, response.data.votingEnd)
                 },
                     error => {
                         this.setState({ error: error.message })
@@ -65,14 +65,19 @@ class Poll extends Component {
 
     }
 
-    checkPollOpen(endDate) {
+    checkPollOpen(startDate, endDate) {
+        const current = new Date()
+        const start = new Date(startDate)
+        if (start > current) {
+            this.setState({ isOpen: false });
+        }
         if (endDate !== null) {
-            const current = new Date()
             const end = new Date(endDate)
             if (current > end) {
                 this.setState({ isOpen: false });
             }
         }
+        
     }
 
     handleClick() {
