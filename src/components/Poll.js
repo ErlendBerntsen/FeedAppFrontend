@@ -8,6 +8,7 @@ class Poll extends Component {
         super(props);
         this.state = {
             isOwner: false,
+            isOpen: true,
             pollId: '',
             answer: '',
             anonymous: false,
@@ -45,6 +46,7 @@ class Poll extends Component {
                             this.setState({ isOwner: true })
                         }
                     }
+                    this.checkPollOpen(response.data.votingEnd)
                 },
                     error => {
                         this.setState({ error: error.message })
@@ -61,6 +63,16 @@ class Poll extends Component {
             this.setState({ answer: target.value });
         }
 
+    }
+
+    checkPollOpen(endDate) {
+        if (endDate !== null) {
+            const current = new Date()
+            const end = new Date(endDate)
+            if (current > end) {
+                this.setState({ isOpen: false });
+            }
+        }
     }
 
     handleClick() {
@@ -120,12 +132,16 @@ class Poll extends Component {
         const anonBox = () => {
             if (!this.state.guest) { //only display this option if the user i logged in
                 return (
-                    <label>Set anonymous vote?
-                        <input type="checkbox"
-                            name="anonymous"
-                            checked={this.state.anonymous}
-                            onChange={this.handleChange} />
-                    </label>)
+                    <div>
+                        <br />
+                        <label>Set anonymous vote?
+                            <input type="checkbox"
+                                name="anonymous"
+                                checked={this.state.anonymous}
+                                onChange={this.handleChange} />
+                        </label>
+                    </div>
+                )
             }
             return null
         }
@@ -134,12 +150,6 @@ class Poll extends Component {
             if (this.state.isOwner) { //only display this option if the user i logged in
                 return (
                     <div>
-                        <p>
-                            <button style={{ background: "green", color: "white" }}
-                                onClick={this.handleClick}>
-                                Show Results
-                            </button>
-                        </p>
                         <p>
                             <button style={{ background: "red", color: "white" }}
                                 onClick={this.handleDelete}>
@@ -150,6 +160,21 @@ class Poll extends Component {
                 );
             }
             return null
+        }
+
+        const vote = () => {
+            if (this.state.isOpen) { //only display this option if the user i logged in
+                return (
+                    <div>
+                        <input type="submit" value="Vote" />
+                    </div>
+                );
+            }
+            return (
+                <div>
+                    <span style={{ color: "red" }}>Voting is closed!</span>
+                </div>
+            );
         }
 
         return (
@@ -183,12 +208,17 @@ class Poll extends Component {
                             No
                         </label>
                     </div>
-                    <br />
                     <div>
                         {anonBox()}
                     </div>
                     <br />
-                    <input type="submit" value="Vote" />
+                    {vote()}
+                    <div>
+                        <button style={{ background: "green", color: "white" }}
+                            onClick={this.handleClick}>
+                            Show Results
+                        </button>
+                    </div>
                 </form>
                 <span style={{ color: "red" }}>{this.state.error}</span>
                 <br />
