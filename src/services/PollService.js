@@ -4,13 +4,14 @@ const url = "http://localhost:8080/polls/"
 
 class PollService {
 
-    getAllPolls() {
-        return axios.get(url)
+    getAllPolls(requestParam) {
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        const config = !currentUser ? null : { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } }
+        return axios.get(url+requestParam, config)
     }
 
     getPoll(id) {
-        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
-        return axios.get(url + id, config)
+        return axios.get(url + id)
     }
 
     deletePoll(id) {
@@ -21,10 +22,13 @@ class PollService {
     createPoll(question, votingStart, votingEnd, isPrivate) {
         const currentUser = JSON.parse(localStorage.getItem('user'));
         const body = { creatorId: currentUser.id, question: question, votingStart: votingStart, votingEnd: votingEnd, isPrivate: isPrivate }
-        return axios.post(url, body)
+        const config = { headers: { Authorization: currentUser.token } }; 
+        return axios.post(url, body, config)
     }
 
-    addVote(pollId, voterId, optionChosen, voteType) {
+    addVote(pollId, optionChosen, voteType) {
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        const voterId = !currentUser ? null : currentUser.id
         const body = { pollId: pollId, voterId: voterId, optionChosen: optionChosen, voteType: voteType }
         return axios.post(url + pollId + "/votes", body)
     }
@@ -41,6 +45,10 @@ class PollService {
     deletevote(pollId, voteId) {
         const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
         return axios.delete(url + pollId + "/votes/" + voteId, config)
+    }
+
+    getResults(pollId) {
+        return axios.get(url + pollId + "/result/" )
     }
 
 

@@ -9,7 +9,7 @@ class CreatePoll extends Component {
         this.state = {
             redirect: null,
             fields: { question: '', isPrivate: false, votingStart: new Date(), votingEnd: '' },
-            errors: { question: '', response: '', votingEnd: '' }
+            errors: { question: '', response: '' }
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleDate = this.handleDate.bind(this);
@@ -50,7 +50,6 @@ class CreatePoll extends Component {
                         errors["response"] = error.message //potential error from post request
                         this.setState({ errors: errors })
                     })
-
         }
         event.preventDefault();
     }
@@ -78,21 +77,25 @@ class CreatePoll extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <input type="text" name="question" placeholder="Question" value={this.state.fields["question"]} onChange={this.handleChange} />
+                        <br />
                         <span style={{ color: "red" }}>{this.state.errors["question"]}</span>
-                        <br /><br />
+                        <br />
                         Set private <input type="checkbox" name="isPrivate" checked={this.state.fields["isPrivate"]} onChange={this.handleChange} />
                         <br />
-                        <p>Set poll start</p>
-                        <DateTimePicker
-                            onChange={(event) => this.handleDate("votingStart", event)}
-                            value={this.state.fields["votingStart"]}
-                        /> <br />
-                        <p>Set poll end</p>
-                        <DateTimePicker
-                            onChange={(event) => this.handleDate("votingEnd", event)}
-                            value={this.state.fields["votingEnd"]}
-                            minDate={this.state.fields["votingStart"]}
-                        /><br /><br />
+                        <div>
+                            <p>Set poll start</p>
+                            <DateTimePicker
+                                onChange={(event) => this.handleDate("votingStart", event)}
+                                value={this.state.fields["votingStart"]}
+                            /> <br />
+                            <p>Set poll end</p>
+                            <DateTimePicker
+                                onChange={(event) => this.handleDate("votingEnd", event)}
+                                value={this.state.fields["votingEnd"]}
+                                minDate={this.state.fields["votingStart"]}
+
+                            /><br /><br />
+                        </div>
                         <input type="submit" value="Submit" />
                         <span style={{ color: "red" }}>{this.state.errors["response"]}</span>
                     </div>
