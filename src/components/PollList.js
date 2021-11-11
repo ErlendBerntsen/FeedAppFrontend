@@ -54,7 +54,7 @@ class PollList extends Component {
         const links = !this.state.contentReady ? null : this.createLinks()
         return (
             <div>
-                <h3>{header}</h3>
+                <h3 style={{color:'blue'}}>{header}</h3>
                 <ul> {links} </ul>
                 <span style={{ color: "red" }}>{this.state.error}</span>
             </div>

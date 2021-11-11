@@ -54,7 +54,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <h2>Sign In</h2>
+                <h2 style={{ color: 'salmon' }}>Sign in</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />

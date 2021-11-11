@@ -65,7 +65,7 @@ class CreateUser extends React.Component {
     render() {
         return (
             <div>
-                <h2>Create new User</h2>
+                <h2 style={{ color: 'orange' }}>Create new user</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />

@@ -188,7 +188,7 @@ class Profile extends Component {
 
     return (
       <div>
-        <h2>Profile</h2>
+        <h2 style={{ color: 'orange' }}>Profile</h2>
         <ul>
           <li>Username: {content.username}</li>
           <li>User Type: {content.userType}</li>

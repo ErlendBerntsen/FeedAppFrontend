@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PollService from "../services/PollService";
 import { Redirect } from "react-router-dom";
+import Countdown from 'react-countdown';
 
 
 class Poll extends Component {
@@ -101,7 +102,6 @@ class Poll extends Component {
     }
 
     alreadyVoted() {
-        //localStorage.removeItem("polls")
         let currentPolls = JSON.parse(localStorage.getItem("polls"))
         if (!currentPolls) {
             currentPolls = { polls: [] }
@@ -154,6 +154,16 @@ class Poll extends Component {
         if (!this.state.contentReady) {
             return null
         }
+        const countdown = () => {
+            if (this.state.content.votingEnd !== null && this.state.isOpen) { 
+                return (
+                    <div>  
+                        <Countdown date={this.state.content.votingEnd}></Countdown>
+                    </div>
+                )
+            }
+            return null
+        }
 
         const { content } = this.state
         const anonBox = () => {
@@ -174,7 +184,7 @@ class Poll extends Component {
         }
 
         const ownerOpt = () => {
-            if (this.state.isOwner) { //only display this option if the user i logged in
+            if (this.state.isOwner) { //only display this option if the user is owner
                 return (
                     <div>
                         <p>
@@ -190,7 +200,7 @@ class Poll extends Component {
         }
 
         const vote = () => {
-            if (this.state.isOpen) { //only display this option if the user i logged in
+            if (this.state.isOpen) { //only display vote button if poll is open
                 return (
                     <div>
                         <input type="submit" value="Vote" />
@@ -206,9 +216,10 @@ class Poll extends Component {
 
         return (
             <div>
-                <h2>Poll</h2>
+                <h1 style={{ color: 'orange' }}>{content.question}</h1>
+                <h4>{countdown()}</h4>
                 <h4>CODE: {content.code}</h4>
-                <h2>{content.question}</h2>
+                
                 <form onSubmit={this.handleSubmit}>
                     <div className="radio">
                         <label>
