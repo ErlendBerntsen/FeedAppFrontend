@@ -50,11 +50,8 @@ class PollList extends Component {
     }
 
     render() {
-        if (!this.state.contentReady) {
-            return null
-        }
         const header = !this.props.user ? "Public polls" : "My polls"
-        const links = this.createLinks()
+        const links = !this.state.contentReady ? null : this.createLinks()
         return (
             <div>
                 <h3>{header}</h3>
