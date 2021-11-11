@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProgressBar = ({ bgcolor, progress, height, label, votes}) => {
+const ProgressBar = ({ bgcolor, progress, height, label, votes }) => {
 
     const Parentdiv = {
         height: height,

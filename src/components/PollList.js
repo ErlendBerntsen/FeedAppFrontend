@@ -43,7 +43,7 @@ class PollList extends Component {
                         state: {
                             id: content[i].id
                         }
-                    }}><h3>{content[i].question}</h3></Link>}
+                    }}><h4>{content[i].question}</h4></Link>}
                 </li>)
         }
         return links

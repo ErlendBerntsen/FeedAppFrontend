@@ -170,6 +170,7 @@ class Poll extends Component {
                             Yes
                         </label>
                     </div>
+                    <br />
                     <div className="radio">
                         <label>
                             <input
@@ -182,9 +183,11 @@ class Poll extends Component {
                             No
                         </label>
                     </div>
+                    <br />
                     <div>
                         {anonBox()}
                     </div>
+                    <br />
                     <input type="submit" value="Vote" />
                 </form>
                 <span style={{ color: "red" }}>{this.state.error}</span>
