@@ -36,7 +36,8 @@ class SearchId extends Component {
                 isValid = true
             },
                 error => {
-                    this.setState({ error: error.response.data })
+                    const mes = !error.response ? error.message : error.response.data
+                    this.setState({ error: mes })
                     isValid = false
                 })
         return isValid

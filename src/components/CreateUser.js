@@ -36,7 +36,8 @@ class CreateUser extends React.Component {
                     }
                 },
                     error => {
-                        this.setState({ errors: error.response.data })
+                        const mes = !error.response ? error.message : error.response.data
+                        this.setState({ errors: mes })
                     })
         }
         event.preventDefault();
