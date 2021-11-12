@@ -43,21 +43,18 @@ class PollList extends Component {
                         state: {
                             id: content[i].id
                         }
-                    }}>{content[i].question}</Link>}
+                    }}><h4>{content[i].question}</h4></Link>}
                 </li>)
         }
         return links
     }
 
     render() {
-        if (!this.state.contentReady) {
-            return null
-        }
         const header = !this.props.user ? "Public polls" : "My polls"
-        const links = this.createLinks()
+        const links = !this.state.contentReady ? null : this.createLinks()
         return (
             <div>
-                <h3>{header}</h3>
+                <h3 style={{color:'blue'}}>{header}</h3>
                 <ul> {links} </ul>
                 <span style={{ color: "red" }}>{this.state.error}</span>
             </div>

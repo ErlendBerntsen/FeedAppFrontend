@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PollService from "../services/PollService";
 import { Redirect } from "react-router-dom";
+import Countdown from 'react-countdown';
 
 
 class Poll extends Component {
@@ -8,13 +9,14 @@ class Poll extends Component {
         super(props);
         this.state = {
             isOwner: false,
+            isOpen: true,
             pollId: '',
             answer: '',
             anonymous: false,
             redirect: null,
             guest: false,
             contentReady: false,
-            currentUser: { username: '', id: '' },
+            currentUser: { username: '', id: '', userType: '' },
             content: '',
             error: ''
         };
@@ -45,6 +47,7 @@ class Poll extends Component {
                             this.setState({ isOwner: true })
                         }
                     }
+                    this.checkPollOpen(response.data.votingStart, response.data.votingEnd)
                 },
                     error => {
                         this.setState({ error: error.message })
@@ -63,23 +66,59 @@ class Poll extends Component {
 
     }
 
+    checkPollOpen(startDate, endDate) {
+        const current = new Date()
+        const start = new Date(startDate)
+        if (start > current) {
+            this.setState({ isOpen: false });
+        }
+        if (endDate !== null) {
+            const end = new Date(endDate)
+            if (current > end) {
+                this.setState({ isOpen: false });
+            }
+        }
+
+    }
+
     handleClick() {
         this.setState({ redirect: "/result" })
     }
 
     handleSubmit(event) {
         event.preventDefault()
-        if (this.handleValidation()) {
+        if (this.handleValidation() && !this.alreadyVoted()) {
             const voteType = this.state.guest ? "GUEST" : this.state.anonymous ? "ANONYMOUS" : "USER"
             PollService.addVote(this.state.pollId, this.state.answer, voteType)
                 .then(() => {
                     alert("Vote sent!")
+                    this.setVoted()
                     this.setState({ redirect: "/result" })
                 },
                     error => {
                         this.setState({ error: error.message })
                     })
         }
+    }
+
+    alreadyVoted() {
+        let currentPolls = JSON.parse(localStorage.getItem("polls"))
+        if (!currentPolls) {
+            currentPolls = { polls: [] }
+            localStorage.setItem("polls", JSON.stringify(currentPolls))
+        }
+        if (currentPolls.polls.indexOf(this.state.pollId) === -1) {
+            return false
+        }
+        this.setState({ error: "You have already voted on this poll!" })
+        return true
+    }
+
+
+    setVoted() {
+        let currentPolls = JSON.parse(localStorage.getItem("polls"))
+        currentPolls.polls.push(this.state.pollId)
+        localStorage.setItem("polls", JSON.stringify(currentPolls))
     }
 
     handleValidation() {
@@ -115,31 +154,39 @@ class Poll extends Component {
         if (!this.state.contentReady) {
             return null
         }
+        const countdown = () => {
+            if (this.state.content.votingEnd !== null && this.state.isOpen) { 
+                return (
+                    <div>  
+                        <Countdown date={this.state.content.votingEnd}></Countdown>
+                    </div>
+                )
+            }
+            return null
+        }
 
         const { content } = this.state
         const anonBox = () => {
             if (!this.state.guest) { //only display this option if the user i logged in
                 return (
-                    <label>Set anonymous vote?
-                        <input type="checkbox"
-                            name="anonymous"
-                            checked={this.state.anonymous}
-                            onChange={this.handleChange} />
-                    </label>)
+                    <div>
+                        <br />
+                        <label>Set anonymous vote?
+                            <input type="checkbox"
+                                name="anonymous"
+                                checked={this.state.anonymous}
+                                onChange={this.handleChange} />
+                        </label>
+                    </div>
+                )
             }
             return null
         }
 
         const ownerOpt = () => {
-            if (this.state.isOwner) { //only display this option if the user i logged in
+            if (this.state.isOwner || this.state.currentUser["userType"] === "ADMIN") { //only display this option if the user is owner
                 return (
                     <div>
-                        <p>
-                            <button style={{ background: "green", color: "white" }}
-                                onClick={this.handleClick}>
-                                Show Results
-                            </button>
-                        </p>
                         <p>
                             <button style={{ background: "red", color: "white" }}
                                 onClick={this.handleDelete}>
@@ -152,11 +199,27 @@ class Poll extends Component {
             return null
         }
 
+        const vote = () => {
+            if (this.state.isOpen) { //only display vote button if poll is open
+                return (
+                    <div>
+                        <input type="submit" value="Vote" />
+                    </div>
+                );
+            }
+            return (
+                <div>
+                    <span style={{ color: "red" }}>Voting is closed!</span>
+                </div>
+            );
+        }
+
         return (
             <div>
-                <h2>Poll</h2>
+                <h1 style={{ color: 'orange' }}>{content.question}</h1>
+                <h4>{countdown()}</h4>
                 <h4>CODE: {content.code}</h4>
-                {content.question}
+                
                 <form onSubmit={this.handleSubmit}>
                     <div className="radio">
                         <label>
@@ -170,6 +233,7 @@ class Poll extends Component {
                             Yes
                         </label>
                     </div>
+                    <br />
                     <div className="radio">
                         <label>
                             <input
@@ -185,7 +249,14 @@ class Poll extends Component {
                     <div>
                         {anonBox()}
                     </div>
-                    <input type="submit" value="Vote" />
+                    <br />
+                    {vote()}
+                    <div>
+                        <button style={{ background: "green", color: "white" }}
+                            onClick={this.handleClick}>
+                            Show Results
+                        </button>
+                    </div>
                 </form>
                 <span style={{ color: "red" }}>{this.state.error}</span>
                 <br />

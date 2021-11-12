@@ -36,7 +36,8 @@ class CreateUser extends React.Component {
                     }
                 },
                     error => {
-                        this.setState({ errors: error.message })
+                        const mes = !error.response ? error.message : error.response.data
+                        this.setState({ errors: mes })
                     })
         }
         event.preventDefault();
@@ -64,18 +65,18 @@ class CreateUser extends React.Component {
     render() {
         return (
             <div>
-                <h2>Create new User</h2>
+                <h2 style={{ color: 'orange' }}>Create new user</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         <input type="text" name="username" placeholder="Username" value={this.state.fields["username"]} onChange={this.handleChange} />
                     </label>
                     <br />
                     <label>
-                        <input type="text" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />
+                        <input type="password" name="password1" placeholder="Password" value={this.state.fields["password1"]} onChange={this.handleChange} />
                     </label>
                     <br />
                     <label>
-                        <input type="text" name="password2" placeholder="Confirm Password" value={this.state.fields["password2"]} onChange={this.handleChange} />
+                        <input type="password" name="password2" placeholder="Confirm Password" value={this.state.fields["password2"]} onChange={this.handleChange} />
                     </label>
                     <br />
                     <input type="submit" value="Create" />

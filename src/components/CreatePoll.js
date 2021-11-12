@@ -73,7 +73,7 @@ class CreatePoll extends Component {
         }
         return (
             <div>
-                <h2>Create new Poll</h2>
+                <h2 style={{ color: 'coral ' }}>Create new Poll</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <input type="text" name="question" placeholder="Question" value={this.state.fields["question"]} onChange={this.handleChange} />
@@ -82,7 +82,7 @@ class CreatePoll extends Component {
                         <br />
                         Set private <input type="checkbox" name="isPrivate" checked={this.state.fields["isPrivate"]} onChange={this.handleChange} />
                         <br />
-                        <div class="dates">
+                        <div>
                             <p>Set poll start</p>
                             <DateTimePicker
                                 onChange={(event) => this.handleDate("votingStart", event)}
@@ -96,7 +96,7 @@ class CreatePoll extends Component {
 
                             /><br /><br />
                         </div>
-                        <input type="submit" value="Submit" />
+                        <input  type="submit" value="Create" />
                         <span style={{ color: "red" }}>{this.state.errors["response"]}</span>
                     </div>
                 </form>
