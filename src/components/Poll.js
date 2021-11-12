@@ -16,7 +16,7 @@ class Poll extends Component {
             redirect: null,
             guest: false,
             contentReady: false,
-            currentUser: { username: '', id: '' },
+            currentUser: { username: '', id: '', userType: '' },
             content: '',
             error: ''
         };
@@ -184,7 +184,7 @@ class Poll extends Component {
         }
 
         const ownerOpt = () => {
-            if (this.state.isOwner) { //only display this option if the user is owner
+            if (this.state.isOwner || this.state.currentUser["userType"] === "ADMIN") { //only display this option if the user is owner
                 return (
                     <div>
                         <p>
