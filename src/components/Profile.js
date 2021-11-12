@@ -69,7 +69,8 @@ class Profile extends Component {
   async handlePassSubmit(event) {
     event.preventDefault();
     if (this.passValidation() && await this.validateCred()) {
-      UserService.updateUser(this.state.content.username, this.state.fields["password1"], this.state.content.id)
+      const body = { password: this.state.fields["password1"] }
+      UserService.updateUser(body, this.state.content.id)
         .then(() => {
           alert("Changed password!")
           window.location.reload(false);
@@ -83,7 +84,8 @@ class Profile extends Component {
   async handleUserSubmit(event) {
     event.preventDefault();
     if (await this.validateCred()) {
-      UserService.updateUser(this.state.fields["username"], this.state.fields["oldPass"], this.state.content.id)
+      const body = { username: this.state.fields["username"] }
+      UserService.updateUser(body, this.state.content.id)
         .then(() => {
           alert("Changed username!")
           window.location.reload(false);

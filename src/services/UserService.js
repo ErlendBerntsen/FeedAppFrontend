@@ -19,8 +19,7 @@ class UserService {
         return axios.delete(url + id, config)
     }
 
-    updateUser(username, password, id) {
-        const body = { username: username, password: password, userType: "REGULAR" }
+    updateUser(body, id) {
         const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
         return axios.put(url + id, body, config)
     }
