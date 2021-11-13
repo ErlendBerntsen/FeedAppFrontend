@@ -1,12 +1,11 @@
 import axios from "axios";
-
-const url = "http://localhost:8080"
+import { BACKEND_ENDPOINT } from "../config";
 
 class AuthService {
 
     login(username, password) {
         const body = { username: username, password: password }
-        return axios.post(url + "/login", body)
+        return axios.post(BACKEND_ENDPOINT + "/login", body)
             .then(response => {
                 if (response.headers.authorization) { //user was authenticated
                     const auth = {
@@ -20,7 +19,7 @@ class AuthService {
 
     register(username, password) {
         const body = { username: username, password: password }
-        return axios.post(url + "/users", body)
+        return axios.post(BACKEND_ENDPOINT + "/users", body)
 
     }
 

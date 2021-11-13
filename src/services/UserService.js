@@ -1,6 +1,8 @@
 import axios from "axios";
+import { BACKEND_ENDPOINT } from "../config";
 
-const url = "http://localhost:8080/users/"
+
+const url = BACKEND_ENDPOINT + "/users/"
 
 
 class UserService {

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { BACKEND_ENDPOINT } from "../config";
 
-const url = "http://localhost:8080/polls/"
+const url = BACKEND_ENDPOINT + "/polls/"
 
 class PollService {
 
