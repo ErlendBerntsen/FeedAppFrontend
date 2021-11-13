@@ -17,13 +17,13 @@ jobs:
       node-version: [12.x, 14.x, 16.x]
 
       steps:
-      - name: Check-out code from repository
-      - uses: actions/checkout@v2
-      - name: Set up Node.js ${{matrix.node-version}}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{matrix.node-version}}
-          cache: 'npm'
-      - run: npm ci # Clean install
-      - run: npm run build --if-present # Execute build script in package.json
-      - run: npm test # Execute test script in package.json, which is currently nothing
+        - name: Check-out code from repository
+          uses: actions/checkout@v2
+        - name: Set up Node.js ${{matrix.node-version}}
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{matrix.node-version}}
+            cache: 'npm'
+        - run: npm ci # Clean install
+        - run: npm run build --if-present # Execute build script in package.json
+        - run: npm test # Execute test script in package.json, which is currently nothing
