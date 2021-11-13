@@ -184,7 +184,7 @@ class Poll extends Component {
         }
 
         const ownerOpt = () => {
-            if (this.state.isOwner || this.state.currentUser["userType"] === "ADMIN") { //only display this option if the user is owner
+            if (this.state.isOwner || (this.state.currentUser && this.state.currentUser["userType"] === "ADMIN")) { //only display this option if the user is owner
                 return (
                     <div>
                         <p>
