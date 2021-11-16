@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_ENDPOINT } from "../config";
+import { BACKEND_ENDPOINT } from "../configurations/config";
 
 
 const url = BACKEND_ENDPOINT + "/users/"
@@ -8,7 +8,8 @@ const url = BACKEND_ENDPOINT + "/users/"
 class UserService {
 
     getAllUsers() {
-        return axios.get(url)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.get(url, config)
     }
 
     getUser(id) {

@@ -1,66 +1,66 @@
-body {
-    background-color: #FFFFFF;
-    padding: 0px;
-    font-family: Arial;
-    text-align: center;
-}
-
-ul li {
-    list-style-type: none;
-    margin: 15px;
+:root {
+  --theme-c1: #FF2E63;
+  --theme-c2: #08D9D6;
+  --theme-c3: #2F303A;
+  --theme-c4: #202027;
+  --theme-text: white;
+  --theme-font: 'Poppins', sans-serif;
 }
 
 
-button {
-border-radius: 4px;
-  background: #d1d1d1;
-  padding: 3px 15px;
-  border:1;
-  cursor: pointer;
-  margin: 8px;
-  border-radius: 10px; 
-  transition: all 0.2s ease-in-out;
+.btn-theme{
+  background-color: var(--theme-c1) !important; 
+  color:var(--theme-c4)!important;
+  
 }
 
-[type=submit] {
-  padding:5px 15px; 
-  background:#ccc; 
-  border: 1;
-  cursor:pointer;
-  -webkit-border-radius: 5px;
-  border-radius: 10px; 
+.btn-theme2{
+  background-color: var(--theme-c2) !important; 
+  color:var(--theme-c4)!important;
+  
 }
 
-input[type=number] {
-  border-radius: 10px;
+.modal-theme .modal-content{
+  background-color: var(--theme-c4)
 }
 
-input[type=text] {
-  width: 15%;
-  padding: 5px 20px;
-  margin: 3px 0;
-  border-radius: 10px;
-  box-sizing: border-box;
+.content{
+  background-color: var(--theme-c3)
 }
 
-input[type=password] {
-  width: 15%;
-  padding: 5px 20px;
-  margin: 3px 0;
-  border-radius: 10px;
-  box-sizing: border-box;
+.pink-text{
+  color: var(--theme-c1)
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.date-time-picker{
+  background-color: var(--theme-text);
+  color: var(--theme-c4);
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+h1{
+  color: var(--theme-c2);
+  font-family: var(--theme-font);
+}
+
+h5{
+  color: var(--theme-c1)
+}
+
+h2, h3,  h6, p, label{
+  color: var(--theme-text)
+}
+
+h6{
+  color: var(--theme-c4)
+}
+
+h4{
+  color: var(--theme-c2)
 }
 
 
-
-
-
-
-
-
+html, body{
+  background-color: var(--theme-c3)
+}
