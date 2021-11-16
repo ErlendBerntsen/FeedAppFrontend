@@ -1,12 +1,15 @@
 import axios from "axios";
+import { BACKEND_ENDPOINT } from "../configurations/config";
 
-const url = "http://localhost:8080/users/"
+
+const url = BACKEND_ENDPOINT + "/users/"
 
 
 class UserService {
 
     getAllUsers() {
-        return axios.get(url)
+        const config = { headers: { Authorization: JSON.parse(localStorage.getItem("user")).token } };
+        return axios.get(url, config)
     }
 
     getUser(id) {

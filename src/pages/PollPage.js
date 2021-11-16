@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import PollService from "../services/PollService";
 import { Redirect } from "react-router-dom";
 import Countdown from 'react-countdown';
+import { MasterPage } from "./MasterPage";
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 
 
-class Poll extends Component {
+
+
+class PollPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -134,7 +141,7 @@ class Poll extends Component {
         PollService.deletePoll(this.state.pollId)
             .then(() => {
                 alert("Poll deleted!")
-                this.props.history.push("/profile");
+                this.props.history.push("/");
                 window.location.reload();
             },
                 error => {
@@ -169,31 +176,23 @@ class Poll extends Component {
         const anonBox = () => {
             if (!this.state.guest) { //only display this option if the user i logged in
                 return (
-                    <div>
-                        <br />
-                        <label>Set anonymous vote?
-                            <input type="checkbox"
-                                name="anonymous"
-                                checked={this.state.anonymous}
-                                onChange={this.handleChange} />
-                        </label>
-                    </div>
+                    <Form.Check type="checkbox" 
+                    name="anonymous"
+                    value="No"
+                    label="Vote anonymously?"
+                    checked={this.state.anonymous}
+                    onChange={this.handleChange}/>
                 )
             }
             return null
         }
 
         const ownerOpt = () => {
-            if (this.state.isOwner || this.state.currentUser["userType"] === "ADMIN") { //only display this option if the user is owner
+            if (this.state.isOwner || (this.state.currentUser && this.state.currentUser["userType"] === "ADMIN")) { //only display this option if the user is owner
                 return (
-                    <div>
-                        <p>
-                            <button style={{ background: "red", color: "white" }}
-                                onClick={this.handleDelete}>
-                                Delete Poll
-                            </button>
-                        </p>
-                    </div>
+                     <Button variant="theme" onClick={this.handleDelete}>
+                        Delete Poll
+                     </Button>
                 );
             }
             return null
@@ -202,9 +201,9 @@ class Poll extends Component {
         const vote = () => {
             if (this.state.isOpen) { //only display vote button if poll is open
                 return (
-                    <div>
-                        <input type="submit" value="Vote" />
-                    </div>
+                    <Button variant="theme" size="lg" type="submit" value="Vote" onClick={(e) => this.handleSubmit(e)}>
+                        <b>Vote</b>
+                     </Button>
                 );
             }
             return (
@@ -215,55 +214,90 @@ class Poll extends Component {
         }
 
         return (
-            <div>
-                <h1 style={{ color: 'orange' }}>{content.question}</h1>
-                <h4>{countdown()}</h4>
-                <h4>CODE: {content.code}</h4>
+            <MasterPage>
+                <Row className="justify-content-md-center">
+                    <Col md="auto">
+                    <h2>{content.question}</h2>
+                    <h4>CODE: {content.code}</h4>
+                    <br/>
+                    <Form>
                 
-                <form onSubmit={this.handleSubmit}>
-                    <div className="radio">
-                        <label>
-                            <input
-                                type="radio"
-                                name="answer"
-                                value="Yes"
-                                checked={this.state.answer === "Yes"}
-                                onChange={this.handleChange}
-                            />
-                            Yes
-                        </label>
-                    </div>
-                    <br />
-                    <div className="radio">
-                        <label>
-                            <input
-                                type="radio"
-                                name="answer"
-                                value="No"
-                                checked={this.state.answer === "No"}
-                                onChange={this.handleChange}
-                            />
-                            No
-                        </label>
-                    </div>
-                    <div>
-                        {anonBox()}
-                    </div>
-                    <br />
-                    {vote()}
-                    <div>
-                        <button style={{ background: "green", color: "white" }}
-                            onClick={this.handleClick}>
-                            Show Results
-                        </button>
-                    </div>
-                </form>
-                <span style={{ color: "red" }}>{this.state.error}</span>
-                <br />
-                {ownerOpt()}
-            </div>
+                        <Row>
+                            <Col>
+                                <Row>
+                                <Col style={{display: "flex", alignItems: "center", }}>
+                                    <Form.Check type="radio" 
+                                                name="answer"
+                                                label="Yes"
+                                                value="Yes"
+                                                checked={this.state.answer === "Yes"}
+                                                onChange={this.handleChange}>
+                                    </Form.Check>
+                                                
+                                </Col>
+                                <Col style={{display: "flex", alignItems: "center", }}>
+                                    <Form.Check type="radio" 
+                                                name="answer"
+                                                value="No"
+                                                label="No"
+                                                checked={this.state.answer === "No"}
+                                                onChange={this.handleChange}>
+                                    </Form.Check>
+                                </Col>
+                                </Row>
+                            <br/>
+                            <Row >
+                                <Col >
+                                    {anonBox()}
+                                </Col>
+                                </Row>
+                            </Col>
+                            <Col>
+                                {vote()}
+                            </Col>
+                        </Row>
+                       
+                
+                    </Form>
+                   
+                    <br/>
+                    <span style={{ color: "red" }}>{this.state.error}</span>
+                    <br/>
+                    <br/>
+                    <Row>
+                        <Col>
+                            <Button variant="theme2" onClick={this.handleClick}>
+                                    Show Results
+                            </Button>
+                        </Col>
+                        <Col>
+                            {ownerOpt()}
+                        </Col>
+                    </Row>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <Row className="justify-content-md-center">
+                        <Col md="auto">
+                            <h3>Voting ends in</h3>
+                        </Col>
+                        <Row className="justify-content-md-center">
+                            <Col md="auto">
+                                <h4>{countdown()}</h4>
+                            </Col>
+                        </Row>
+                    </Row>
+   
+              
+                    </Col>
+                </Row>
+                  
+            </MasterPage>
+      
         );
     }
 }
 
-export default Poll
+export default PollPage;

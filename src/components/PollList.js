@@ -21,8 +21,11 @@ class PollList extends Component {
             return
         }
         this.setState({ currentUser: currentUser })
-        const requestParam = this.props.user ? "?creator=" + currentUser.id : "?isPrivate=false"
-        PollService.getAllPolls(requestParam)
+        const currentUserId = this.props.currentUser? currentUser.id : null
+        const id = this.props.id? this.props.id : currentUserId
+        const requestParam = this.props.user ? "?creator=" + id : "?isPrivate=false"
+        const isAdmin = currentUser && currentUser.userType === "ADMIN"
+        PollService.getAllPolls((!this.props.user && isAdmin)? "": requestParam)
             .then(response => {
                 this.setState({ content: response.data, contentReady: true })
             },
@@ -50,15 +53,18 @@ class PollList extends Component {
     }
 
     render() {
-        const header = !this.props.user ? "Public polls" : "My polls"
+        const isAdmin = this.state.currentUser &&  this.state.currentUser.userType === "ADMIN"
+        const title = isAdmin? "Polls" : "Public polls"
+        const header = !this.props.user ? title : "My polls"
         const links = !this.state.contentReady ? null : this.createLinks()
         return (
-            <div>
-                <h3 style={{color:'blue'}}>{header}</h3>
-                <ul> {links} </ul>
-                <span style={{ color: "red" }}>{this.state.error}</span>
-            </div>
-
+                    <div>
+                    <h3>{header}</h3>
+                    <ul> {links} </ul>
+                    <span style={{ color: "red" }}>{this.state.error}</span>
+                    </div>
+    
+          
         );
     }
 }

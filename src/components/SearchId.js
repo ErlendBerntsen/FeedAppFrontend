@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import PollService from "../services/PollService";
 import { Redirect } from "react-router-dom";
-
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 class SearchId extends Component {
     constructor(props) {
         super(props);
@@ -53,27 +57,28 @@ class SearchId extends Component {
             }} />
         }
 
-        const stylee = {
-            width: "20%",
-            padding: "5px 20px",
-            margin: "8px 20px",
-        }
-
         return (
-            <div>
-                Find poll by Code
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        <input type="number" style={stylee}
-                            placeholder="Enter Poll Code"
-                            value={this.state.code}
-                            onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                    <br />
+            <Container>
+            <Form >
+                
+                <Row>
+                    <Col  md="auto" style={{display: "flex", alignItems: "center", }}>
+                    <Form.Control type="number" 
+                                placeholder="Enter code"
+                                value={this.state.code}
+                                onChange={this.handleChange}/>
+                    </Col>
+                    <Col xs ="auto">
+                    <Button variant="theme" type="submit" onClick={(e) => this.handleSubmit(e)}><b>Go To Poll</b></Button>
+
+                    </Col>
+                </Row>
+                <Row>
                     <span style={{ color: "red" }}>{this.state.error}</span>
-                </form>
-            </div>
+                </Row>
+            </Form>
+        </Container>
+          
         )
     }
 
