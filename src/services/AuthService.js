@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_ENDPOINT } from "../config";
+import { BACKEND_ENDPOINT } from "../configurations/config";
 
 class AuthService {
 
