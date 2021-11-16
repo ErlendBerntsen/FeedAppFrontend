@@ -40,7 +40,7 @@ class CreateUserPage extends React.Component {
                 .then(response => {
                     if (response.status === 201) {
                         alert('User created successfully');
-                        this.props.history.push("/signIn"); //redirect to login
+                        this.props.history.push("/"); //redirect to login
                         window.location.reload();
                     }
                 },
