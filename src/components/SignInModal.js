@@ -11,7 +11,6 @@ import AuthService from "../services/AuthService";
 
 
 export default function SignInModal() {
-    //TODO proper error message when you log in with wrong credentials
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,25 +26,21 @@ export default function SignInModal() {
             <Modal.Title><h3>Sign In</h3></Modal.Title>
           </Modal.Header>
           <Container>
-          <Row>
-            <Col >
-                <Modal.Body>
-                    <SignInForm></SignInForm>
-                </Modal.Body>
-            </Col>
+            <Row>
+                <Col >
+                    <Modal.Body>
+                        <SignInForm></SignInForm>
+                    </Modal.Body>
+                </Col>
 
-          </Row>
-          <Row className="justify-content-md-center">
-          <Col md="auto">
-            <p>Don't have an account?</p>
-            <Link to="/createUser"><p className="pink-text">Create a new one here</p></Link>
-            </Col>
-          </Row>
-          <Row>
-          </Row>
-        </Container>
-        
-        
+            </Row>
+            <Row className="justify-content-md-center">
+            <Col md="auto">
+                <p>Don't have an account?</p>
+                <Link to="/createUser"><p className="pink-text">Create a new one here</p></Link>
+                </Col>
+            </Row>
+         </Container>
         </Modal>
       </>
     );
