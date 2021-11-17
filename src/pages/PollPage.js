@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import COLORS from '../configurations/CSSConfiguration'
+
 
 
 
@@ -16,7 +18,8 @@ class PollPage extends Component {
         super(props);
         this.state = {
             isOwner: false,
-            isOpen: true,
+            voting: '',
+            countdownTime: null,
             pollId: '',
             answer: '',
             anonymous: false,
@@ -76,15 +79,24 @@ class PollPage extends Component {
     checkPollOpen(startDate, endDate) {
         const current = new Date()
         const start = new Date(startDate)
-        if (start > current) {
-            this.setState({ isOpen: false });
+        const end = new Date(endDate)
+        console.log("current: " + current)
+        console.log("start: " + start)
+        console.log("end: " + end)
+
+
+        if (current < start) {
+            this.setState({ voting: "notStarted" });
+            this.setState({ countdownTime: start});
         }
-        if (endDate !== null) {
-            const end = new Date(endDate)
-            if (current > end) {
-                this.setState({ isOpen: false });
-            }
+        else if(end < current){
+            this.setState({ voting: "ended" });
         }
+        else if(start <= current && current <= end){
+            this.setState({ voting: "started" });
+            this.setState({ countdownTime: end});
+        }
+ 
 
     }
 
@@ -162,11 +174,20 @@ class PollPage extends Component {
             return null
         }
         const countdown = () => {
-            if (this.state.content.votingEnd !== null && this.state.isOpen) { 
+            console.log(this.state.voting)
+            console.log(this.state.countdownTime)
+            if (this.state.countdownTime) { 
                 return (
-                    <div>  
-                        <Countdown date={this.state.content.votingEnd}></Countdown>
-                    </div>
+                    <Row className="justify-content-md-center">
+                        <Col md="auto">
+                            <h3>{this.state.voting === 'notStarted'? "Voting starts in" : "Voting ends in"}</h3>
+                        </Col>
+                        <Row className="justify-content-md-center">
+                            <Col md="auto">
+                                <h4>{<Countdown date={this.state.countdownTime}></Countdown>}</h4>
+                            </Col>
+                        </Row>
+                    </Row>
                 )
             }
             return null
@@ -199,18 +220,72 @@ class PollPage extends Component {
         }
 
         const vote = () => {
-            if (this.state.isOpen) { //only display vote button if poll is open
+            if (this.state.voting === "started"){ //only display vote button if poll is open
                 return (
-                    <Button variant="theme" size="lg" type="submit" value="Vote" onClick={(e) => this.handleSubmit(e)}>
-                        <b>Vote</b>
-                     </Button>
+                    <Form>
+                
+                    <Row>
+                        <Col>
+                            <Row>
+                            <Col style={{display: "flex", alignItems: "center", }}>
+                                <Form.Check type="radio" 
+                                            name="answer"
+                                            label="Yes"
+                                            value="Yes"
+                                            checked={this.state.answer === "Yes"}
+                                            onChange={this.handleChange}>
+                                </Form.Check>
+                                            
+                            </Col>
+                            <Col style={{display: "flex", alignItems: "center", }}>
+                                <Form.Check type="radio" 
+                                            name="answer"
+                                            value="No"
+                                            label="No"
+                                            checked={this.state.answer === "No"}
+                                            onChange={this.handleChange}>
+                                </Form.Check>
+                            </Col>
+                            </Row>
+                        <br/>
+                        <Row >
+                            <Col >
+                                {anonBox()}
+                            </Col>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Button variant="theme" size="lg" type="submit" value="Vote" onClick={(e) => this.handleSubmit(e)}>
+                                 <b>Vote</b>
+                             </Button>
+                
+                        </Col>
+                    </Row>
+                    <br/>
+                    <Row>
+                        <h5><a href={"https://dweet.io/follow/" + this.state.content.id} target="_blank" rel="noreferrer" style={{color: COLORS.complementary}}>
+                                Follow the results on dweet here
+                            </a>
+                        </h5>
+                    </Row>
+                   
+            
+                </Form>);
+                   
+            }
+            if(this.state.voting === "ended"){
+                return (
+                    <Row>
+                        <h5>Voting has ended!</h5>
+                        <h5><a href={"https://dweet.io/follow/" + this.state.content.id} target="_blank" rel="noreferrer" style={{color: COLORS.complementary}}>
+                                See the results on dweet here
+                            </a>
+                        </h5>
+                    </Row>
                 );
             }
-            return (
-                <div>
-                    <span style={{ color: "red" }}>Voting is closed!</span>
-                </div>
-            );
+            return (<></>);
+         
         }
 
         return (
@@ -220,56 +295,21 @@ class PollPage extends Component {
                     <h2>{content.question}</h2>
                     <h4>CODE: {content.code}</h4>
                     <br/>
-                    <Form>
-                
-                        <Row>
-                            <Col>
-                                <Row>
-                                <Col style={{display: "flex", alignItems: "center", }}>
-                                    <Form.Check type="radio" 
-                                                name="answer"
-                                                label="Yes"
-                                                value="Yes"
-                                                checked={this.state.answer === "Yes"}
-                                                onChange={this.handleChange}>
-                                    </Form.Check>
-                                                
-                                </Col>
-                                <Col style={{display: "flex", alignItems: "center", }}>
-                                    <Form.Check type="radio" 
-                                                name="answer"
-                                                value="No"
-                                                label="No"
-                                                checked={this.state.answer === "No"}
-                                                onChange={this.handleChange}>
-                                    </Form.Check>
-                                </Col>
-                                </Row>
-                            <br/>
-                            <Row >
-                                <Col >
-                                    {anonBox()}
-                                </Col>
-                                </Row>
-                            </Col>
-                            <Col>
-                                {vote()}
-                            </Col>
-                        </Row>
-                       
-                
-                    </Form>
-                   
+                    {vote()}
                     <br/>
                     <span style={{ color: "red" }}>{this.state.error}</span>
                     <br/>
                     <br/>
                     <Row>
-                        <Col>
-                            <Button variant="theme2" onClick={this.handleClick}>
-                                    Show Results
-                            </Button>
-                        </Col>
+                        {this.state.voting === "notStarted"? <></>
+                            :
+                            <Col>
+                                <Button variant="theme2" onClick={this.handleClick}>
+                                        Show Results
+                                </Button>
+                            </Col> 
+                        }
+                
                         <Col>
                             {ownerOpt()}
                         </Col>
@@ -279,18 +319,7 @@ class PollPage extends Component {
                     <br/>
                     <br/>
                     <br/>
-                    <Row className="justify-content-md-center">
-                        <Col md="auto">
-                            <h3>Voting ends in</h3>
-                        </Col>
-                        <Row className="justify-content-md-center">
-                            <Col md="auto">
-                                <h4>{countdown()}</h4>
-                            </Col>
-                        </Row>
-                    </Row>
-   
-              
+                    {countdown()}
                     </Col>
                 </Row>
                   

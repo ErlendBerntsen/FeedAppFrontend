@@ -41,7 +41,6 @@ class CreatePollPage extends Component {
         let fields = this.state.fields
         fields[name] = event
         this.setState({ fields })
-        console.log(this.state.fields["votingStart"])
     }
 
     handleSubmit(event) {
@@ -75,6 +74,19 @@ class CreatePollPage extends Component {
             isValid = false
             errors["question"] = "Question cannot be empty"
         }
+        if(!fields["votingStart"]){
+            isValid = false
+            errors["votingStart"] = "Voting start must be specified"
+        }
+        if(fields["votingEnd"] <= fields["votingStart"]){
+            isValid = false
+            errors["votingEnd"] = "Voting end must be after voting start"
+        }
+        if(!fields["votingEnd"]){
+            isValid = false
+            errors["votingEnd"] = "Voting end must be specified"
+        }
+     
         this.setState({ errors: errors });
         return isValid
     }
@@ -123,6 +135,8 @@ class CreatePollPage extends Component {
                                 value={this.state.fields["votingStart"]}
                             />   
                 </Col>
+                <span style={{ color: "red" }}>{this.state.errors["votingStart"]}</span>
+
                          
                 </Row>
                 <br/>
@@ -137,6 +151,8 @@ class CreatePollPage extends Component {
                                 />
                     </Col>
                 </Row>
+                <span style={{ color: "red" }}>{this.state.errors["votingEnd"]}</span>
+
                 <Row>
                     <span style={{ color: "red" }}>{this.state.errors["response"]}</span>
                 </Row>
